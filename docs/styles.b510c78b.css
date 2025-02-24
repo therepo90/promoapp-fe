@@ -3635,244 +3635,64 @@ select.stack:focus + select {
   right: 100%;
   top: 7px;
 }
-.upload-icon {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 5px;
-}
-.upload-text {
-  vertical-align: middle;
-}
-#sub-btn {
-  pointer-events: none;
-  touch-action: none;
-}
-.dropzone {
-  border: 2px dashed #ccc;
-  padding: 40px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.hidden {
-  display: none;
-}
-.dropzone.drag-over {
-  background-color: #f0f0f0;
-}
-#preview {
-  margin-top: 20px;
-}
-#previewImage {
-  max-width: 100%;
-  max-height: 200px;
-}
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 0;
-  background: url(bg1.aa0c6d35.jpg) no-repeat center center fixed;
+  background: white;
   background-size: cover;
   background-attachment: fixed;
   color: #000000;
   margin: 0;
 }
-h1 {
-  color: #FFFFFF;
+.footer {
+  width: 100%;
+  background-color: #ececec;
+  padding: 10px;
   text-align: center;
-  margin-bottom: 20px;
-  font-size: 48px;
+}
+.footer a {
+  color: black;
+}
+.main {
+  background-color: white;
+  padding: 20px;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: max-content 1fr max-content;
 }
 .container {
   background-color: white;
   /* White background color */
   border-radius: 8px;
-  box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.8);
   max-width: 600px;
-  margin-bottom: 60px;
   margin: 0 auto;
   padding: 20px;
   font-size: 16px;
   line-height: 20px;
+  /*center to screen*/
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 160px;
 }
-img.logo {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
+.input {
+  width: 400px;
 }
-p {
-  color: #333;
-  /* Dark text color */
-  margin-bottom: 20px;
+.inputs {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 20px;
 }
-.info {
-  color: #000000;
-  /* Purple text color */
-  font-weight: bold;
-}
-.link {
-  height: 60px;
-  display: block;
-  background-color: #000000;
-  /* Purple background color */
-  color: #fff;
-  padding: 12px 24px;
-  text-decoration: none;
-  border-radius: 8px;
-  font-size: 18px;
-  width: 100%;
-  max-width: 260px;
-  margin: 0 auto;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-.link:hover {
-  background-color: #000000;
-  /* Darker purple on hover */
-  color: #eee;
-}
-.seo {
-  position: absolute;
-  transform: translate(-99999px, -99999px);
-}
-.footer {
-  width: 100%;
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
+.h3 {
   text-align: center;
+  font-size: 36px;
 }
-.logo-container img {
-  max-width: 250px;
-  padding: 10px;
-}
-@media (max-width: 768px) {
-  .logo-container {
-    flex-direction: column;
-  }
-}
-.main {
-  background-color: rgba(0, 0, 0, 0.3);
-  padding: 20px;
-  min-height: 100%;
-}
-.donate {
-  max-width: 300px;
-  transform: scale(0.8);
-}
-.donate.two {
-  margin-left: 30px;
-}
-@media screen and (max-width: 992px) {
-  .donate {
-    max-width: 100%;
-  }
-  .donate.two {
-    margin-left: unset;
-  }
-  .donate-container {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-.hidden {
-  display: none !important;
-}
-.nav a {
-  font-size: 16px;
-  padding: 8px 2px;
-}
-/*
-.supp li {
-  display: inline-block;
-}*/
 html {
   scroll-behavior: smooth;
 }
 body {
   font-size: 16px;
-}
-.the-label {
-  text-align: center;
-  width: 100%;
-  font-size: 16px;
-}
-/* Container for animated letters */
-.fancy-letters {
-  display: inline-flex;
-  font-size: 1.2em;
-  /* Adjust font size to match h2 */
-  letter-spacing: -0.1em;
-  /* Reduce spacing between letters */
-}
-/* Each letter style and animation */
-.letter {
-  display: inline-block;
-  animation: colorChange 1s infinite, bend 2s infinite;
-  /* Faster color change */
-}
-/* Animation to bend each letter individually */
-@keyframes bend {
-  0%,
-  100% {
-    transform: rotate(var(--rs)) translateY(var(--ts));
-  }
-  50% {
-    transform: rotate(var(--re)) translateY(var(--te));
-  }
-}
-/* Animation to change colors */
-@keyframes colorChange {
-  0% {
-    color: #ff9999;
-  }
-  /* Light red */
-  25% {
-    color: #99ff99;
-  }
-  /* Light green */
-  50% {
-    color: #9999ff;
-  }
-  /* Light blue */
-  75% {
-    color: #ffff99;
-  }
-  /* Light yellow */
-  100% {
-    color: #ff9999;
-  }
-  /* Light red */
-}
-/* Individual colors for each letter */
-.letter:nth-child(1) {
-  --ts: 0px;
-  --te: -20px;
-  --rs: 0deg;
-  --re: -20deg;
-  animation: colorChange 1s infinite, bend 2s infinite;
-}
-.letter:nth-child(2) {
-  --ts: 0px;
-  --te: -25px;
-  --rs: 0deg;
-  --re: -10deg;
-  margin-left: 10px;
-  animation: colorChange 1s infinite 0.2s, bend 2s infinite;
-  /* Staggered animation */
-}
-.letter:nth-child(3) {
-  --ts: 0px;
-  --te: -25px;
-  --rs: 0deg;
-  --re: 10deg;
-  margin-left: 10px;
-  animation: colorChange 1s infinite 0.4s, bend 2s infinite;
-  /* Staggered animation */
-}
-.letter:nth-child(4) {
-  --ts: 0px;
-  --te: -20px;
-  --rs: 0deg;
-  --re: 20deg;
-  margin-left: 10px;
-  animation: colorChange 1s infinite 0.6s, bend 2s infinite;
-  /* Staggered animation */
 }
