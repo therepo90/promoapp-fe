@@ -229,6 +229,9 @@ async function callPromo(url) {
   const templateSource = document.getElementById('template').innerHTML;
   const template = window.Handlebars.compile(templateSource);
   const data = await runGetPromo(url);
+  console.log('runGetPromo done', {
+    data
+  });
   /*const data = {
       id: 'e8431b98-3699-4db8-a531-5b8194e39f15'
   }*/
@@ -245,8 +248,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById('data-container').innerHTML = '';
     document.getElementById('loading').classList.remove('hidden');
     document.getElementById('loading-succ').classList.add('hidden');
-    await callPromo(url).then(e => {
-      console.log('callPromo done');
+    // delay 1000 s
+    //await new Promise(resolve => setTimeout(resolve, 1000000));
+    await callPromo(url).then(res => {
+      console.log('callPromo done', res);
       document.getElementById('loading-succ').classList.remove('hidden');
     }).finally(() => {
       btn.disabled = false;

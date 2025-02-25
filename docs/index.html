@@ -26,8 +26,9 @@
     <link rel="icon" type="image/x-icon" href="favicon.b6d93c49.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
-    <link rel="stylesheet" href="styles.f0532537.css">
-    <script src="scripts.514a7542.js" defer=""></script>
+    <link rel="stylesheet" href="styles.99a9d7dd.css">
+    <script src="rg-web-component.c82a82e9.1bb0b6c3.js" defer=""></script>
+    <script src="scripts.c1aa3b28.js" defer=""></script>
 </head>
 <body>
 
@@ -98,13 +99,22 @@
 <div class="main">
 <!--    <h1 class="h1">I am an Engineer and I dont like marketing</h1>-->
     <h1 class="h1">Promote your SaaS</h1>
-
     <div class="container">
         <div class="inputs">
             <input type="text" placeholder="Your website url" class="input" id="input" value="https://teidepermit.eu">
             <button class="btn btn-primary" id="go-btn">Do the marketing stuff.</button>
         </div>
-        <div class="loading hidden" id="loading">Working really hard...(up to 3 mins)</div>
+
+        <div id="loading" class="hidden loading">
+            <div>Working really hard
+                <span class="dot1">.</span>
+                <span class="dot2">.</span>
+                <span class="dot3">.</span>
+                (up to 3 mins)</div>
+            <div class="pro-loader">
+                <rg-wgl-loader></rg-wgl-loader>
+            </div>
+        </div>
         <div class="loading-success hidden" id="loading-succ">Woff that was painful, but here we are:</div>
 
         <div id="data-container" class="data-c"></div>
