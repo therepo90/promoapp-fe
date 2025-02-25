@@ -124,7 +124,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.apiUrl = void 0;
-const apiUrl = exports.apiUrl = "false" === 'true' ? 'http://localhost:3000' : 'z';
+const apiUrl = exports.apiUrl = "false" === 'true' ? 'http://localhost:3000' : 'https://apipromo.idontknowhatimdoing.com';
 //export const baseUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:3000' : 'https://api.translatesubtitles.org';
 /*const redirectUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:1234' : 'https://translatesubtitles.org';*/
 /*
