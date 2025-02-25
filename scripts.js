@@ -2,6 +2,7 @@
 
 import {apiUrl} from "./cfg";
 import {checkResError} from "./utils";
+import {zzz} from "./fixture";
 
 var globals = {
     paymentUrl: undefined,
@@ -11,7 +12,33 @@ export const  updateUI = async () => {
 
 }
 
-async function getPromo(url) {
+//polling fn to get promo based on status, use getPromo
+async function pollPromo(id, count =0) {
+    if(count > 100) {
+        throw new Error('Timeout');
+    }
+    const promo = await getPromo(id);
+    if (promo.status === 'done') {
+        return promo;
+    }
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    return pollPromo(id, count+1);
+}
+
+async function getPromo(id) {
+    const baseUrl = apiUrl;
+    const res =  await fetch(`${baseUrl}/api/promo-info/${id}`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    await checkResError(res);
+    const data = await res.json();
+    return data;
+}
+
+async function runGetPromo(url) {
     const baseUrl = apiUrl;
     const res =  await fetch(baseUrl + "/api/promo-info", {
         method: "POST",
@@ -32,14 +59,11 @@ export async function callPromo(url) {
     const dataContainer = document.getElementById('data-container');
     const templateSource = document.getElementById('template').innerHTML;
     const template = window.Handlebars.compile(templateSource);
+    //const redditData = zzz;
+    const data = await runGetPromo(url);
 
-    const data = await getPromo(url);
-    // fill json-c pre element
-    //document.getElementById('json-c').textContent = JSON.stringify(data, null, 2);
-
-
-    const html = template(data); // Pass the data to the template
-
+    const redditData = await pollPromo(data.id);
+    const html = template(redditData.json);
     dataContainer.innerHTML = html;
 
 }
