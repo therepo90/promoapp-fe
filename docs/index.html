@@ -26,25 +26,48 @@
     <link rel="icon" type="image/x-icon" href="favicon.b6d93c49.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
-    <link rel="stylesheet" href="styles.41c0e2dd.css">
-    <script src="scripts.edbc23a0.js" defer=""></script>
+    <link rel="stylesheet" href="styles.f0532537.css">
+    <script src="scripts.514a7542.js" defer=""></script>
 </head>
 <body>
 
-
+<script>Handlebars.registerHelper('truncate', function (str, len) {
+  if (str && str.length > len) {
+    var new_str = str.substring(0, len + 1).replace(/\s+\S*$/, '');
+    return new Handlebars.SafeString(new_str + '...');
+  }
+  return str;
+});</script>
 <script id="template" type="text/x-handlebars-template">
     <!--<p><strong>URL:</strong> <a href="{{url}}">{{url}}</a></p>-->
     <section>
         <h2 class="section-title">Reddit Posts</h2>
-        <ul class="post-list">
-            {{#each posts}}
-                <li>
-                    <a href="https://reddit.com/r/{{subr}}">/r/{{subr}}: </a>
-
-                    <a class="post-link" href="{{href}}">{{title}}</a> <span class="post-votes">({{votes}} votes)</span></li>
-            {{/each}}
-        </ul>
+        {{#each posts}}
+            <div class="subreddit-section">
+                <h3 class="subr"><a href="https://reddit.com/r/{{@key}}">/r/{{@key}}</a></h3>
+                <ul class="post-list">
+                    {{#each this}}
+                        <li>
+                            <a class="post-link" href="{{href}}">{{title}}</a>
+                            <span class="post-votes">({{votes}} votes)</span>
+                            <p>{{truncate text 200}}</p>
+                            <!--<p>Reason: {{reason}}</p>-->
+                        </li>
+                    {{/each}}
+                </ul>
+            </div>
+        {{/each}}
     </section>
+
+    <section>
+        <h2 class="section-title">Description</h2>
+        <p>{{description}}</p>
+    </section>
+
+    <section>
+        <h2 class="section-title">Other stuff you prolly wanna use:</h2>
+    </section>
+
     <section>
         <h2 class="section-title">Keywords</h2>
         <ul class="keyword-list">
@@ -55,7 +78,7 @@
     </section>
 
     <section>
-        <h2 class="section-title">Functions</h2>
+        <h2 class="section-title">Features</h2>
         <ul class="func-list">
             {{#each funcs}}
                 <li>{{this}}</li>
@@ -71,8 +94,6 @@
             {{/each}}
         </ul>
     </section>
-
-
 </script>
 <div class="main">
 <!--    <h1 class="h1">I am an Engineer and I dont like marketing</h1>-->
@@ -83,7 +104,8 @@
             <input type="text" placeholder="Your website url" class="input" id="input" value="https://teidepermit.eu">
             <button class="btn btn-primary" id="go-btn">Do the marketing stuff.</button>
         </div>
-        <div class="loading hidden" id="loading">Loading...(up to 1-5 minutes)</div>
+        <div class="loading hidden" id="loading">Working really hard...(up to 3 mins)</div>
+        <div class="loading-success hidden" id="loading-succ">Woff that was painful, but here we are:</div>
 
         <div id="data-container" class="data-c"></div>
 

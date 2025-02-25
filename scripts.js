@@ -2,7 +2,6 @@
 
 import {apiUrl} from "./cfg";
 import {checkResError} from "./utils";
-import {zzz} from "./fixture";
 
 var globals = {
     paymentUrl: undefined,
@@ -59,9 +58,11 @@ export async function callPromo(url) {
     const dataContainer = document.getElementById('data-container');
     const templateSource = document.getElementById('template').innerHTML;
     const template = window.Handlebars.compile(templateSource);
-    //const redditData = zzz;
-    const data = await runGetPromo(url);
 
+    const data = await runGetPromo(url);
+        /*const data = {
+            id: 'e8431b98-3699-4db8-a531-5b8194e39f15'
+        }*/
     const redditData = await pollPromo(data.id);
     const html = template(redditData.json);
     dataContainer.innerHTML = html;
@@ -76,7 +77,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         btn.disabled = true;
         document.getElementById('data-container').innerHTML = '';
         document.getElementById('loading').classList.remove('hidden');
-        await callPromo(url).finally(() => {
+        document.getElementById('loading-succ').classList.add('hidden');
+        await callPromo(url).then(e => {
+            console.log('callPromo done');
+            document.getElementById('loading-succ').classList.remove('hidden');
+        }).finally(() => {
             btn.disabled = false;
             document.getElementById('loading').classList.add('hidden');
         });
