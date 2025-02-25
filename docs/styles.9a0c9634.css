@@ -3656,7 +3656,7 @@ body {
 .main {
   background-color: white;
   padding: 20px;
-  height: 100vh;
+  min-height: 100vh;
   display: grid;
   grid-template-rows: max-content 1fr max-content;
 }
@@ -3664,7 +3664,7 @@ body {
   background-color: white;
   /* White background color */
   border-radius: 8px;
-  max-width: 600px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   font-size: 16px;
@@ -3672,7 +3672,7 @@ body {
   /*center to screen*/
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  margin-top: 200px;
   align-items: center;
   padding-bottom: 160px;
 }
@@ -3685,10 +3685,83 @@ body {
   justify-content: center;
   align-items: center;
   grid-gap: 20px;
+  max-width: 600px;
+}
+.h1 {
+  text-align: center;
+  font-size: 36px;
+  padding-top: 40px;
 }
 .h3 {
   text-align: center;
-  font-size: 36px;
+  font-size: 24px;
+  color: gray;
+}
+.ul {
+  margin: 0 auto;
+  width: 600px;
+  padding-top: 120px;
+  color: #252525;
+  font-size: 16px;
+}
+#go-btn.disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+.section-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+.keyword-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.keyword-list li {
+  margin-right: 0.5em;
+  margin-bottom: 0.25em;
+  padding: 0.25em 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+.func-list {
+  list-style: disc;
+  margin-left: 20px;
+}
+.sub-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.sub-list li {
+  margin-bottom: 0.5em;
+}
+.post-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.post-list li {
+  margin-bottom: 0.5em;
+}
+.post-link {
+  text-decoration: none;
+}
+.post-votes {
+  font-style: italic;
+  color: #888;
+}
+.data-c {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 html {
   scroll-behavior: smooth;

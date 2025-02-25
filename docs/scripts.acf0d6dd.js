@@ -117,10 +117,108 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"imtx":[function(require,module,exports) {
+})({"mhI4":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.apiUrl = void 0;
+const apiUrl = exports.apiUrl = "false" === 'true' ? 'http://localhost:3000' : 'z';
+//export const baseUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:3000' : 'https://api.translatesubtitles.org';
+/*const redirectUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:1234' : 'https://translatesubtitles.org';*/
+/*
+export const auth0Cfg = {
+    "domain": "translatesubtitles.eu.auth0.com",
+    "clientId": "Yl7KeMwXe4zeLMPz9zIHc33Nircfgxh1",
+    authorizationParams: {
+        redirect_uri: redirectUrl,
+        audience: 'https://translatesubtitles',
+    }
+}*/
+},{}],"FOZT":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.handleResError = exports.checkResError = void 0;
+const checkResError = async response => {
+  if (!response.ok) {
+    let err;
+    try {
+      err = await response.clone().json();
+    } catch (e) {
+      err = await response.clone().text();
+    }
+    handleResError(err);
+    throw new Error(err);
+  }
+};
+exports.checkResError = checkResError;
+const handleResError = errObject => {
+  let msg = errObject?.error?.message || errObject?.message;
+  if (typeof errObject === 'string') {
+    msg = errObject;
+  }
+  alert(msg || 'Error');
+  console.error('Res error:');
+  console.error(errObject);
+};
+exports.handleResError = handleResError;
+},{}],"imtx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.callPromo = callPromo;
+exports.updateUI = void 0;
+var _cfg = require("./cfg");
+var _utils = require("./utils");
 //const host = 'http://localhost:3000';
 
 var globals = {
   paymentUrl: undefined
 };
-},{}]},{},["imtx"], null)
+const updateUI = async () => {};
+exports.updateUI = updateUI;
+async function getPromo(url) {
+  const baseUrl = _cfg.apiUrl;
+  const res = await fetch(baseUrl + "/api/promo-info", {
+    method: "POST",
+    body: JSON.stringify({
+      url
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  await (0, _utils.checkResError)(res);
+  const data = await res.json();
+  return data;
+}
+async function callPromo(url) {
+  console.log('callPromo...');
+  const dataContainer = document.getElementById('data-container');
+  const templateSource = document.getElementById('template').innerHTML;
+  const template = window.Handlebars.compile(templateSource);
+  const data = await getPromo(url);
+  // fill json-c pre element
+  //document.getElementById('json-c').textContent = JSON.stringify(data, null, 2);
+
+  const html = template(data); // Pass the data to the template
+
+  dataContainer.innerHTML = html;
+}
+document.addEventListener("DOMContentLoaded", async function () {
+  console.log('DOMContentLoaded init...');
+  const btn = document.getElementById('go-btn');
+  btn.addEventListener('click', async function () {
+    const url = document.getElementById('input').value;
+    btn.disabled = true;
+    await callPromo(url);
+    btn.disabled = false;
+  });
+});
+},{"./cfg":"mhI4","./utils":"FOZT"}]},{},["imtx"], null)

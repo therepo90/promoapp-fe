@@ -23,21 +23,72 @@
     <meta name="twitter:description" content="">
     <meta name="twitter:image" content="">
     <link rel="canonical" href="">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="favicon.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
-
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     <link rel="stylesheet" href="./styles.less">
     <script src="./scripts.js" defer></script>
 </head>
 <body>
+
+
+<script id="template" type="text/x-handlebars-template">
+    <!--<p><strong>URL:</strong> <a href="{{url}}">{{url}}</a></p>-->
+    <section>
+        <h2 class="section-title">Reddit Posts</h2>
+        <ul class="post-list">
+            {{#each posts}}
+                <li><a class="post-link" href="{{href}}">{{title}}</a> <span class="post-votes">({{votes}} votes)</span></li>
+            {{/each}}
+        </ul>
+    </section>
+    <section>
+        <h2 class="section-title">Keywords</h2>
+        <ul class="keyword-list">
+            {{#each keywords}}
+                <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </section>
+
+    <section>
+        <h2 class="section-title">Functions</h2>
+        <ul class="func-list">
+            {{#each funcs}}
+                <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </section>
+
+    <section>
+        <h2 class="section-title">Subreddits</h2>
+        <ul class="sub-list">
+            {{#each subs}}
+                <li><a href="{{link}}">{{name}}</a> ({{users}} users)</li>
+            {{/each}}
+        </ul>
+    </section>
+
+
+</script>
 <div class="main">
-    <h3 class="h3">Promo app</h3>
-    <!--centered input -->
+<!--    <h1 class="h1">I am an Engineer and I dont like marketing</h1>-->
+    <h1 class="h1">Promote your SaSS</h1>
+
     <div class="container">
         <div class="inputs">
-            <input type="text" placeholder="Your website url" class="input">
-            <button class="btn btn-primary">Promo my app.</button>
+            <input type="text" placeholder="Your website url" class="input" id="input" value="https://financialpanda.pl">
+            <button class="btn btn-primary" id="go-btn">Do the marketing stuff.</button>
         </div>
+
+        <div id="data-container" class="data-c"></div>
+
+        <ul class="ul">
+            <li>-Finds keywords and functionalities of your super-cool app</li>
+            <li>-Finds reddit posts you can comment pretending your app to be helpful</li>
+            <li>-Generates boring non-advertise-looking content allowing you to save your dignity if you invented that yourself.</li>
+            <li>-... and other stuff</li>
+        </ul>
     </div>
     <div class="footer">
         &copy; 2025 PromoApp | <a href="https://therepo90.github.io">RepoGamesStudio</a> |
