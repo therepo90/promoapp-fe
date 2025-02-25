@@ -59,10 +59,10 @@ export async function callPromo(url) {
     const templateSource = document.getElementById('template').innerHTML;
     const template = window.Handlebars.compile(templateSource);
 
-//    const data = await runGetPromo(url);
-        const data = {
+    const data = await runGetPromo(url);
+    /*    const data = {
             id: 'e8431b98-3699-4db8-a531-5b8194e39f15'
-        }
+        }*/
     console.log('runGetPromo done', {data});
     const redditData = await pollPromo(data.id);
     const html = template(redditData.json);
