@@ -217,8 +217,12 @@ document.addEventListener("DOMContentLoaded", async function () {
   btn.addEventListener('click', async function () {
     const url = document.getElementById('input').value;
     btn.disabled = true;
-    await callPromo(url);
-    btn.disabled = false;
+    document.getElementById('data-container').innerHTML = '';
+    document.getElementById('loading').classList.remove('hidden');
+    await callPromo(url).finally(() => {
+      btn.disabled = false;
+      document.getElementById('loading').classList.add('hidden');
+    });
   });
 });
 },{"./cfg":"mhI4","./utils":"FOZT"}]},{},["imtx"], null)

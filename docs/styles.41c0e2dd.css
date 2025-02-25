@@ -3763,6 +3763,9 @@ body {
   align-items: center;
   flex-direction: column;
 }
+.hidden {
+  display: none;
+}
 html {
   scroll-behavior: smooth;
 }

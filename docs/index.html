@@ -26,8 +26,8 @@
     <link rel="icon" type="image/x-icon" href="favicon.b6d93c49.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
-    <link rel="stylesheet" href="styles.9a0c9634.css">
-    <script src="scripts.5e55f75f.js" defer=""></script>
+    <link rel="stylesheet" href="styles.41c0e2dd.css">
+    <script src="scripts.87a1c44c.js" defer=""></script>
 </head>
 <body>
 
@@ -38,7 +38,10 @@
         <h2 class="section-title">Reddit Posts</h2>
         <ul class="post-list">
             {{#each posts}}
-                <li><a class="post-link" href="{{href}}">{{title}}</a> <span class="post-votes">({{votes}} votes)</span></li>
+                <li>
+                    <a href="https://reddit.com/r/{{subr}}">/r{{subr}}: </a>
+
+                    <a class="post-link" href="{{href}}">{{title}}</a> <span class="post-votes">({{votes}} votes)</span></li>
             {{/each}}
         </ul>
     </section>
@@ -80,6 +83,7 @@
             <input type="text" placeholder="Your website url" class="input" id="input" value="https://financialpanda.pl">
             <button class="btn btn-primary" id="go-btn">Do the marketing stuff.</button>
         </div>
+        <div class="loading hidden" id="loading">Loading...</div>
 
         <div id="data-container" class="data-c"></div>
 

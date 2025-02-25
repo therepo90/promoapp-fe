@@ -38,7 +38,10 @@
         <h2 class="section-title">Reddit Posts</h2>
         <ul class="post-list">
             {{#each posts}}
-                <li><a class="post-link" href="{{href}}">{{title}}</a> <span class="post-votes">({{votes}} votes)</span></li>
+                <li>
+                    <a href="https://reddit.com/r/{{subr}}">/r{{subr}}: </a>
+
+                    <a class="post-link" href="{{href}}">{{title}}</a> <span class="post-votes">({{votes}} votes)</span></li>
             {{/each}}
         </ul>
     </section>
@@ -80,6 +83,7 @@
             <input type="text" placeholder="Your website url" class="input" id="input" value="https://financialpanda.pl">
             <button class="btn btn-primary" id="go-btn">Do the marketing stuff.</button>
         </div>
+        <div class="loading hidden" id="loading">Loading...</div>
 
         <div id="data-container" class="data-c"></div>
 
