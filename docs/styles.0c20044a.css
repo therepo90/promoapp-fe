@@ -3647,6 +3647,7 @@ select.stack:focus + select {
   margin: 0;
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
 }
 .keyword-list li {
   margin-right: 0.5em;
@@ -3664,6 +3665,8 @@ select.stack:focus + select {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 .sub-list li {
   margin-bottom: 0.5em;
@@ -3758,8 +3761,18 @@ body {
   align-items: center;
   padding-bottom: 160px;
 }
+@media (max-width: 992px) {
+  .container {
+    max-width: 100%;
+  }
+}
 .input {
   width: 400px;
+}
+@media (max-width: 992px) {
+  .input {
+    width: 100%;
+  }
 }
 .inputs {
   display: grid;
@@ -3768,6 +3781,11 @@ body {
   align-items: center;
   grid-gap: 20px;
   max-width: 600px;
+}
+@media (max-width: 992px) {
+  .inputs {
+    max-width: 100%;
+  }
 }
 .h1 {
   text-align: center;
@@ -3810,6 +3828,7 @@ rg-wgl-loader {
   margin: 0 auto;
 }
 .dot1 {
+  font-size: 24px;
   animation: visibility 3s linear infinite;
 }
 @keyframes visibility {
@@ -3827,6 +3846,7 @@ rg-wgl-loader {
   }
 }
 .dot2 {
+  font-size: 36px;
   animation: visibility2 3s linear infinite;
 }
 @keyframes visibility2 {
@@ -3850,6 +3870,7 @@ rg-wgl-loader {
   }
 }
 .dot3 {
+  font-size: 48px;
   animation: visibility3 3s linear infinite;
 }
 @keyframes visibility3 {
@@ -3871,6 +3892,10 @@ rg-wgl-loader {
   100% {
     opacity: 0;
   }
+}
+.meta {
+  display: flex;
+  gap: 40px;
 }
 html {
   scroll-behavior: smooth;

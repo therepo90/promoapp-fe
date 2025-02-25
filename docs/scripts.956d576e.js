@@ -228,16 +228,18 @@ async function callPromo(url) {
   const dataContainer = document.getElementById('data-container');
   const templateSource = document.getElementById('template').innerHTML;
   const template = window.Handlebars.compile(templateSource);
-  const data = await runGetPromo(url);
+
+  //    const data = await runGetPromo(url);
+  const data = {
+    id: 'e8431b98-3699-4db8-a531-5b8194e39f15'
+  };
   console.log('runGetPromo done', {
     data
   });
-  /*const data = {
-      id: 'e8431b98-3699-4db8-a531-5b8194e39f15'
-  }*/
   const redditData = await pollPromo(data.id);
   const html = template(redditData.json);
   dataContainer.innerHTML = html;
+  return redditData;
 }
 document.addEventListener("DOMContentLoaded", async function () {
   console.log('DOMContentLoaded init...');
@@ -251,7 +253,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     // delay 1000 s
     //await new Promise(resolve => setTimeout(resolve, 1000000));
     await callPromo(url).then(res => {
-      console.log('callPromo done', res);
+      console.log('callPromo done', {
+        res
+      });
       document.getElementById('loading-succ').classList.remove('hidden');
     }).finally(() => {
       btn.disabled = false;
