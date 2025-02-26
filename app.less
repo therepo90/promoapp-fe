@@ -53,6 +53,7 @@ body {
 
   @media (max-width: 992px) {
     max-width: 100%;
+    margin-top: 50px;
   }
 }
 .input {
@@ -62,14 +63,15 @@ body {
   }
 }
 .inputs{
-  display: grid;
-  grid-template-columns: max-content max-content;
+  display: flex;
   justify-content: center;
   align-items: center;
   grid-gap: 20px;
-  max-width: 600px;
+  max-width: 700px;
   @media (max-width: 992px) {
+    width: 100%;
     max-width: 100%;
+    flex-direction: column;
   }
 }
 
@@ -92,6 +94,9 @@ body {
   padding-top: 120px;
   color: #252525;
   font-size: 16px;
+  @media (max-width: 992px) {
+    width: 100%;
+  }
 }
 
 #go-btn.disabled{
