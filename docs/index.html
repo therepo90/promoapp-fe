@@ -49,6 +49,10 @@ Handlebars.registerHelper('fNum', function formatNumber(number) {
 });</script>
 <script id="template" type="text/x-handlebars-template">
     <!--<p><strong>URL:</strong> <a href="{{url}}">{{url}}</a></p>-->
+    <section>
+        <h2 class="section-title">Description</h2>
+        <p>{{desc}}</p>
+    </section>
 
     <div class="meta" >
         <section>
@@ -88,14 +92,10 @@ Handlebars.registerHelper('fNum', function formatNumber(number) {
         {{/each}}
     </section>
 
-    <section>
-        <h2 class="section-title">Description</h2>
-        <p>{{desc}}</p>
-    </section>
 
-    <section>
+    <!--<section>
         <h2 class="section-title">Other stuff you prolly wanna use:</h2>
-    </section>
+    </section>-->
 
 
     <section>
