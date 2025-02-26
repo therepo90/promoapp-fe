@@ -184,11 +184,10 @@ void main()
 `;
   }, {}],
   "uAQe": [function (require, module, exports) {
-    module.exports = `attribute vec2 a_position;
+    module.exports = `#version 100
 
-uniform vec2 iResolution;
-uniform float iTime; // seconds
-uniform vec2 iMouse;
+attribute vec2 a_position;
+
 void main() {
     gl_Position = vec4(a_position, 0, 1);
 }
