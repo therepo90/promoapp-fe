@@ -504,66 +504,72 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ){
     Object.defineProperty(exports, "__esModule", {
       value: !0
     }), exports.createRgLoader = void 0;
-    const e = (e, r) => {
-      customElements.define(r, class extends HTMLElement {
+    const e = (e, t) => {
+      customElements.define(t, class extends HTMLElement {
         constructor() {
           super(), this.attachShadow({
             mode: "open"
           }), this.fragmentCode = e;
         }
         connectedCallback() {
-          console.log("connected" + r), this.shadowRoot.innerHTML = '\n            <style>\n                :host { display: block; width: 100%; height: 100%; }\n            </style>\n            <canvas id="rg-wgl-loader-canvas" width="250px" height="250px"></canvas>\n        ', this.mouse = {
+          console.log("connected" + t), this.shadowRoot.innerHTML = '\n            <style>\n                :host { display: block; width: 100%; height: 100%; }\n            </style>\n            <canvas id="rg-wgl-loader-canvas" width="250px" height="250px"></canvas>\n        ', this.mouse = {
             x: 0,
             y: 0
           }, this.startTime = Date.now(), this.setupWebGL(), this.setupMouseListeners();
         }
         setupWebGL() {
           const e = this.shadowRoot.getElementById("rg-wgl-loader-canvas"),
-            r = e.getContext("webgl");
-          if (!r) return console.error("Unable to initialize WebGL. Your browser may not support it."), void alert("Unable to initialize WebGL. Your browser may not support it.");
-          let t = require("./fragment-main.glsl");
+            t = e.getContext("webgl");
+          if (!t) return console.error("Unable to initialize WebGL. Your browser may not support it."), void alert("Unable to initialize WebGL. Your browser may not support it.");
+          let r = require("./fragment-main.glsl");
           const o = this.fragmentCode;
-          t = t.replace('#include "fragment.glsl"', o);
+          r = r.replace('#include "fragment.glsl"', o);
           const a = require("./vertex.glsl"),
-            i = t,
-            n = this.compileShader(r, r.VERTEX_SHADER, a),
-            s = this.compileShader(r, r.FRAGMENT_SHADER, i);
-          if (!n || !s) return console.error("Shader compilation failed."), void alert("Shader compilation failed.");
-          const l = this.createProgram(r, n, s);
+            n = r,
+            i = this.compileShader(t, t.VERTEX_SHADER, a),
+            s = this.compileShader(t, t.FRAGMENT_SHADER, n);
+          if (!i || !s) return console.error("Shader compilation failed."), void alert("Shader compilation failed.");
+          const l = this.createProgram(t, i, s);
           if (!l) return console.error("Shader program linking failed."), void alert("Shader program linking failed.");
-          const c = r.createBuffer();
-          r.bindBuffer(r.ARRAY_BUFFER, c);
+          const c = t.createBuffer();
+          t.bindBuffer(t.ARRAY_BUFFER, c);
           const d = new Float32Array([-1, -1, -1, 1, 1, 1, -1, -1, 1, 1, 1, -1]);
-          r.bufferData(r.ARRAY_BUFFER, d, r.STATIC_DRAW), r.useProgram(l);
-          const g = r.getAttribLocation(l, "a_position");
+          t.bufferData(t.ARRAY_BUFFER, d, t.STATIC_DRAW), t.useProgram(l);
+          const g = t.getAttribLocation(l, "a_position");
           if (-1 === g) return console.error("Unable to get attribute location for a_position"), void alert("Unable to get attribute location for a_position");
-          r.enableVertexAttribArray(g), r.bindBuffer(r.ARRAY_BUFFER, c), r.vertexAttribPointer(g, 2, r.FLOAT, !1, 0, 0);
-          const h = r.getUniformLocation(l, "iResolution"),
-            m = r.getUniformLocation(l, "iMouse"),
-            u = r.getUniformLocation(l, "iTime");
-          if (null === h || null === u) return console.error("Unable to get uniform location(s)"), void alert("Unable to get uniform location(s)");
-          r.uniform2f(h, e.width, e.height);
+          t.enableVertexAttribArray(g), t.bindBuffer(t.ARRAY_BUFFER, c), t.vertexAttribPointer(g, 2, t.FLOAT, !1, 0, 0);
+          const h = t.getUniformLocation(l, "iResolution"),
+            u = t.getUniformLocation(l, "iMouse"),
+            m = t.getUniformLocation(l, "iTime");
+          if (null === h || null === m) return console.error("Unable to get uniform location(s)"), void alert("Unable to get uniform location(s)");
+          t.uniform2f(h, e.width, e.height);
           const f = () => {
-              r.clearColor(0, 0, 0, 1), r.clear(r.COLOR_BUFFER_BIT), r.uniform2f(m, this.mouse.x, this.mouse.y), r.uniform1f(u, (Date.now() - this.startTime) / 1e3), r.drawArrays(r.TRIANGLES, 0, 6);
+              t.clearColor(0, 0, 0, 1), t.clear(t.COLOR_BUFFER_BIT), t.uniform2f(u, this.mouse.x, this.mouse.y), t.uniform1f(m, (Date.now() - this.startTime) / 1e3), t.drawArrays(t.TRIANGLES, 0, 6);
             },
             p = () => {
               f(), requestAnimationFrame(p);
             };
           p();
         }
-        compileShader(e, r, t) {
-          const o = e.createShader(r);
-          return e.shaderSource(o, t), e.compileShader(o), e.getShaderParameter(o, e.COMPILE_STATUS) ? o : (console.error(`Error compiling shader: ${e.getShaderInfoLog(o)}`), alert("`Error compiling shader: ${gl.getShaderInfoLog(shader)}`"), e.deleteShader(o), null);
+        compileShader(e, t, r) {
+          const o = e.createShader(t);
+          return e.shaderSource(o, r), e.compileShader(o), e.getShaderParameter(o, e.COMPILE_STATUS) ? o : (console.error(`Error compiling shader: ${e.getShaderInfoLog(o)}`), alert("`Error compiling shader: ${gl.getShaderInfoLog(shader)}`"), e.deleteShader(o), null);
         }
-        createProgram(e, r, t) {
+        createProgram(e, t, r) {
           const o = e.createProgram();
-          return e.attachShader(o, r), e.attachShader(o, t), e.linkProgram(o), e.getProgramParameter(o, e.LINK_STATUS) ? o : (console.error(`Unable to initialize the shader program: ${e.getProgramInfoLog(o)}`), alert(`Unable to initialize the shader program: ${e.getProgramInfoLog(o)}`), null);
+          return e.attachShader(o, t), e.attachShader(o, r), e.linkProgram(o), e.getProgramParameter(o, e.LINK_STATUS) ? o : (console.error(`Unable to initialize the shader program: ${e.getProgramInfoLog(o)}`), alert(`Unable to initialize the shader program: ${e.getProgramInfoLog(o)}`), null);
         }
         setupMouseListeners() {
           const e = this.shadowRoot.getElementById("rg-wgl-loader-canvas");
-          document.addEventListener("mousemove", r => {
-            const t = e.getBoundingClientRect();
-            this.mouse.x = r.clientX - t.left, this.mouse.y = t.height - (r.clientY - t.top);
+          document.addEventListener("mousemove", t => {
+            const r = e.getBoundingClientRect();
+            this.mouse.x = t.clientX - r.left, this.mouse.y = r.height - (t.clientY - r.top);
+          }), document.addEventListener("touchmove", t => {
+            t.preventDefault();
+            const r = e.getBoundingClientRect();
+            this.mouse.x = t.touches[0].clientX - r.left, this.mouse.y = r.height - (t.touches[0].clientY - r.top);
+          }, {
+            passive: !1
           });
         }
       });
