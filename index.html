@@ -53,7 +53,7 @@
 <script id="template" type="text/x-handlebars-template">
     <!--<p><strong>URL:</strong> <a href="{{url}}">{{url}}</a></p>-->
     <section>
-        <h2 class="section-title">Description</h2>
+        <h2 class="section-title">What your page offers:</h2>
         <p>{{desc}}</p>
     </section>
 
@@ -102,7 +102,7 @@
 
 
     <section>
-        <h2 class="section-title">Subreddits(sort by revelance)</h2>
+        <h2 class="section-title">Subreddits you can spam with your app</h2>
         <ul class="sub-list">
             {{#each subs}}
                 <li><a href="{{link}}">{{name}}</a> ({{fNum users}} users)</li>
@@ -120,11 +120,12 @@
         </div>
 
         <div id="loading" class="hidden loading">
-            <div>Working really hard
+            <div> <span id="loading-text">Hey my name is John and I'll look it up for you...gimme a sec</span>
                 <span class="dot1">.</span>
                 <span class="dot2">.</span>
                 <span class="dot3">.</span>
-                (up to 3 mins)</div>
+                (up to 3 minutes)
+                </div>
             <div class="pro-loader">
                 <rg-wgl-loader></rg-wgl-loader>
             </div>
@@ -134,10 +135,11 @@
         <div id="data-container" class="data-c"></div>
 
         <ul class="ul">
-            <li>-Finds keywords and functionalities of your super-cool app</li>
             <li>-Finds reddit posts you can comment pretending your app to be helpful</li>
-            <li>-Generates boring non-advertise-looking content allowing you to save your dignity if you invented that yourself.</li>
-            <li>-... and other stuff</li>
+            <li>-Generates boring non-advertise-looking content allowing you to save your dignity if you came up with one yourself.</li>
+            <li>-Finds keywords and functionalities of your super-cool app you can spam your videos and posts with</li>
+            <li>-You can just blame AI if your startup didnt make any money</li>
+            <li>-... and other shieeet</li>
         </ul>
     </div>
     <div class="footer">

@@ -71,7 +71,28 @@ export async function callPromo(url) {
     return redditData;
 
 }
-
+const funnyNames = [
+    "Bob McMuffin",
+    "Chad Thundercock",
+    "Sir Loinsteak",
+    "Jimmy NoToes",
+    "Albie Back",
+    "Barb Dwyer",
+    "Hugh Jass",
+    "Anita Bath",
+    "Ben Dover",
+    "Sal Monella",
+    "Rick O'Shea",
+    "Dustin Trousers",
+    "Stan Dupp",
+    "Pat Myback",
+    "Ella Vator",
+    "Bill Board",
+    "Sue Permann",
+    "Otto Correct",
+    "Paige Turner",
+    "Terry Bull"
+];
 document.addEventListener("DOMContentLoaded", async function () {
     console.log('DOMContentLoaded init...');
     const btn = document.getElementById('go-btn');
@@ -80,6 +101,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         btn.disabled = true;
         document.getElementById('data-container').innerHTML = '';
         document.getElementById('loading').classList.remove('hidden');
+
+        const name = funnyNames[Math.floor(Math.random() * funnyNames.length)];
+        document.getElementById('loading-text').innerText = `Hey my name is ${name} and I'll work for you today...gimme a sec`;
+
         document.getElementById('loading-succ').classList.add('hidden');
         // delay 1000 s
         //await new Promise(resolve => setTimeout(resolve, 1000000));
