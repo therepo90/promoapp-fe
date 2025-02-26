@@ -52,6 +52,26 @@
 </script>
 <script id="template" type="text/x-handlebars-template">
     <!--<p><strong>URL:</strong> <a href="{{url}}">{{url}}</a></p>-->
+
+    <div class="meta" >
+        <section>
+            <h2 class="section-title">Keywords</h2>
+            <ul class="keyword-list">
+                {{#each keywords}}
+                    <li>{{this}}</li>
+                {{/each}}
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="section-title">Features</h2>
+            <ul class="func-list">
+                {{#each funcs}}
+                    <li>{{this}}</li>
+                {{/each}}
+            </ul>
+        </section>
+    </div>
     <section>
         <h2 class="section-title">Reddit Posts</h2>
         {{#each posts}}
@@ -80,25 +100,6 @@
         <h2 class="section-title">Other stuff you prolly wanna use:</h2>
     </section>
 
-    <div class="meta" >
-    <section>
-        <h2 class="section-title">Keywords</h2>
-        <ul class="keyword-list">
-            {{#each keywords}}
-                <li>{{this}}</li>
-            {{/each}}
-        </ul>
-    </section>
-
-    <section>
-        <h2 class="section-title">Features</h2>
-        <ul class="func-list">
-            {{#each funcs}}
-                <li>{{this}}</li>
-            {{/each}}
-        </ul>
-    </section>
-    </div>
 
     <section>
         <h2 class="section-title">Subreddits(sort by revelance)</h2>
