@@ -3740,7 +3740,6 @@ body {
 }
 .main {
   background-color: white;
-  padding: 20px;
   min-height: 100vh;
   display: grid;
   grid-template-rows: max-content 1fr max-content;
@@ -3759,7 +3758,7 @@ body {
   flex-direction: column;
   margin-top: 200px;
   align-items: center;
-  padding-bottom: 160px;
+  padding-bottom: 100px;
 }
 @media (max-width: 992px) {
   .container {
