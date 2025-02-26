@@ -525,11 +525,11 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ){
           const o = this.fragmentCode;
           r = r.replace('#include "fragment.glsl"', o);
           const a = require("./vertex.glsl"),
-            n = r,
-            i = this.compileShader(t, t.VERTEX_SHADER, a),
-            s = this.compileShader(t, t.FRAGMENT_SHADER, n);
-          if (!i || !s) return console.error("Shader compilation failed."), void alert("Shader compilation failed.");
-          const l = this.createProgram(t, i, s);
+            i = r,
+            n = this.compileShader(t, t.VERTEX_SHADER, a),
+            s = this.compileShader(t, t.FRAGMENT_SHADER, i);
+          if (!n || !s) return console.error("Shader compilation failed."), void alert("Shader compilation failed.");
+          const l = this.createProgram(t, n, s);
           if (!l) return console.error("Shader program linking failed."), void alert("Shader program linking failed.");
           const c = t.createBuffer();
           t.bindBuffer(t.ARRAY_BUFFER, c);
@@ -564,7 +564,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ){
           document.addEventListener("mousemove", t => {
             const r = e.getBoundingClientRect();
             this.mouse.x = t.clientX - r.left, this.mouse.y = r.height - (t.clientY - r.top);
-          }), document.addEventListener("touchmove", t => {
+          }), e.addEventListener("touchmove", t => {
             t.preventDefault();
             const r = e.getBoundingClientRect();
             this.mouse.x = t.touches[0].clientX - r.left, this.mouse.y = r.height - (t.touches[0].clientY - r.top);
