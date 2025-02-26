@@ -64,6 +64,7 @@ export async function callPromo(url) {
             id: 'e8431b98-3699-4db8-a531-5b8194e39f15'
         }*/
     console.log('runGetPromo done', {data});
+    await new Promise(resolve => setTimeout(resolve, 5000));
     const redditData = await pollPromo(data.id);
     const html = template(redditData.json);
     dataContainer.innerHTML = html;

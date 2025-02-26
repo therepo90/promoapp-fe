@@ -235,6 +235,7 @@ async function callPromo(url) {
   console.log('runGetPromo done', {
     data
   });
+  await new Promise(resolve => setTimeout(resolve, 5000));
   const redditData = await pollPromo(data.id);
   const html = template(redditData.json);
   dataContainer.innerHTML = html;
