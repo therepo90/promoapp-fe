@@ -234,7 +234,8 @@ async function getPromo(id, token) {
     id,
     token
   });
-  const res = await fetch(`${baseUrl}/api/promo-info/${id}?token=${token || ''}`, {
+  const tokenQuery = token ? `token=${token}` : '';
+  const res = await fetch(`${baseUrl}/api/promo-info/${id}?${tokenQuery}`, {
     method: "GET",
     headers: {
       'Content-Type': 'application/json'
