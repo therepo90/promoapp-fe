@@ -3904,6 +3904,10 @@ rg-wgl-loader {
   display: flex;
   gap: 40px;
 }
+.small-text {
+  font-size: 12px;
+  color: gray;
+}
 html {
   scroll-behavior: smooth;
 }

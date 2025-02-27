@@ -56,7 +56,7 @@
     });
 </script>
 <script id="template" type="text/x-handlebars-template">
-    <p><strong>URL:</strong> <a href="{{url}}">{{url}}</a></p>
+    <p><strong>URL:</strong> <a href="{{url}}" target="_blank">{{url}}</a></p>
     <section>
         <h2 class="section-title">What your page offers:</h2>
         <p>{{desc}}</p>
@@ -88,7 +88,7 @@
         </div>
         {{#each posts}}
             <div class="subreddit-section">
-                <h3 class="subr"><a href="https://reddit.com/r/{{@key}}">/r/{{@key}}</a></h3>
+                <h3 class="subr"><a target="_blank" href="https://reddit.com/r/{{@key}}">/r/{{@key}}</a></h3>
                 <ul class="post-list">
                     {{#each this}}
                         <li>
@@ -116,7 +116,7 @@
         </div>
         <ul class="sub-list">
             {{#each subs}}
-                <li><a href="{{link}}" onclick="goToLink(event, '{{link}}')">{{name}}</a> ({{fNum users}} users)</li>
+                <li><a href="{{link}}" onclick="goToLink(event, '{{link}}')" target="_blank">{{name}}</a> ({{fNum users}} users)</li>
             {{/each}}
         </ul>
     </section>

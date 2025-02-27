@@ -1,5 +1,6 @@
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="app.2dcf16ea.css">
     <meta charset="utf-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -30,9 +31,9 @@
     <link rel="icon" type="image/x-icon" href="favicon.b6d93c49.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
-    <link rel="stylesheet" href="styles.a0a4fe46.css">
+    <link rel="stylesheet" href="styles.4e18fad5.css">
     <script src="rg-web-component.c82a82e9.77b88d9d.js" defer=""></script>
-    <script src="scripts.4f6b1fc3.js" defer=""></script>
+    <script src="scripts.4042cfac.js" defer=""></script>
 </head>
 <body>
 
@@ -52,7 +53,7 @@ Handlebars.registerHelper('fNum', function formatNumber(number) {
   return number.toString();
 });</script>
 <script id="template" type="text/x-handlebars-template">
-    <p><strong>URL:</strong> <a href="{{url}}">{{url}}</a></p>
+    <p><strong>URL:</strong> <a href="{{url}}" target="_blank">{{url}}</a></p>
     <section>
         <h2 class="section-title">What your page offers:</h2>
         <p>{{desc}}</p>
@@ -79,9 +80,12 @@ Handlebars.registerHelper('fNum', function formatNumber(number) {
     </div>
     <section>
         <h2 class="section-title">Reddit Posts</h2>
+        <div class="small-text">
+            Free version is limited. Full access is 4.99$.
+        </div>
         {{#each posts}}
             <div class="subreddit-section">
-                <h3 class="subr"><a href="https://reddit.com/r/{{@key}}">/r/{{@key}}</a></h3>
+                <h3 class="subr"><a target="_blank" href="https://reddit.com/r/{{@key}}">/r/{{@key}}</a></h3>
                 <ul class="post-list">
                     {{#each this}}
                         <li>
@@ -103,10 +107,13 @@ Handlebars.registerHelper('fNum', function formatNumber(number) {
 
 
     <section>
-        <h2 class="section-title">Subreddits you can spam with your app</h2>
+        <h2 class="section-title">Subreddits related to your app</h2>
+        <div class="small-text">
+            Free version is limited. Full access is 4.99$.
+        </div>
         <ul class="sub-list">
             {{#each subs}}
-                <li><a href="{{link}}" onclick="goToLink(event, '{{href}}')">{{name}}</a> ({{fNum users}} users)</li>
+                <li><a href="{{link}}" onclick="goToLink(event, '{{link}}')" target="_blank">{{name}}</a> ({{fNum users}} users)</li>
             {{/each}}
         </ul>
     </section>
@@ -121,6 +128,7 @@ Handlebars.registerHelper('fNum', function formatNumber(number) {
             <input type="text" placeholder="Your website url" class="input" id="input" value="">
             <button class="btn btn-primary" id="go-btn">Do the marketing stuff.</button>
         </div>
+
 
         <div id="loading" class="hidden loading">
             <div> <span id="loading-text">Hey my name is John and I'll look it up for you...gimme a sec</span>
@@ -143,7 +151,7 @@ Handlebars.registerHelper('fNum', function formatNumber(number) {
             <li>-Finds keywords and functionalities of your super-cool app you can spam your videos and posts with</li>
             <li>-You can just blame AI if your startup didnt make any money</li>
             <li>-... and other shieeet</li>
-            <li>-<i>No credit card, no subscriptions, not even a clumsy account needed. Full access is 4.99$ bucks.</i> </li>
+            <!--<li>-<i>No credit card, no subscriptions, not even a clumsy account needed. Freemium - full access is 4.99$ bucks.</i> </li>-->
         </ul>
     </div>
     <div class="footer">
