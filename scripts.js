@@ -156,6 +156,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // check for url query param token and save to session storage and remove from url
     const urlParams = new URLSearchParams(window.location.search);
+    // paymentSuccess
     const token = urlParams.get('token');
     document.getElementById('input').value = process.env.LOCAL_DEV ? 'https://translatesubtitles.org' : '';
     btn.addEventListener('click', async function () {
