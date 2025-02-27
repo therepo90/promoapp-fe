@@ -123,7 +123,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.shouldDelay = exports.dell = exports.apiUrl = void 0;
+exports.shouldDelay = exports.dell = exports.defaultInput = exports.apiUrl = void 0;
 const apiUrl = exports.apiUrl = "false" === 'true' ? 'http://localhost:3000' : 'https://apipromo.idontknowhatimdoing.com';
 const dell = exports.dell = "false" === 'true' ? false : true;
 //export const baseUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:3000' : 'https://api.translatesubtitles.org';
@@ -138,6 +138,7 @@ export const auth0Cfg = {
     }
 }*/
 const shouldDelay = exports.shouldDelay = dell;
+const defaultInput = exports.defaultInput = 'https://translatesubtitles.org/'; // process.env.LOCAL_DEV === 'true' ? 'https://translatesubtitles.org' : '';
 },{}],"FOZT":[function(require,module,exports) {
 "use strict";
 
@@ -334,9 +335,12 @@ document.addEventListener("DOMContentLoaded", async function () {
   const urlParams = new URLSearchParams(window.location.search);
   // paymentSuccess
   const token = urlParams.get('token');
-  document.getElementById('input').value = "false" === 'true' ? 'https://translatesubtitles.org' : '';
+  document.getElementById('input').value = _cfg.defaultInput;
   btn.addEventListener('click', async function () {
-    const url = document.getElementById('input').value;
+    const url = (document.getElementById('input').value || '').trim();
+    if (!url) {
+      return;
+    }
     btn.disabled = true;
     await doMarketingStuff(url, btn).finally(() => {
       btn.disabled = false;

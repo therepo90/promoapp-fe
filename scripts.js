@@ -1,6 +1,6 @@
 //const host = 'http://localhost:3000';
 
-import {apiUrl, shouldDelay} from "./cfg";
+import {apiUrl, defaultInput, shouldDelay} from "./cfg";
 import {checkResError} from "./utils";
 import {createBuySession} from "./stripe";
 
@@ -158,9 +158,13 @@ document.addEventListener("DOMContentLoaded", async function () {
     const urlParams = new URLSearchParams(window.location.search);
     // paymentSuccess
     const token = urlParams.get('token');
-    document.getElementById('input').value = process.env.LOCAL_DEV === 'true' ? 'https://translatesubtitles.org' : '';
+
+    document.getElementById('input').value = defaultInput;
     btn.addEventListener('click', async function () {
-        const url = document.getElementById('input').value;
+        const url = (document.getElementById('input').value || '').trim();
+        if(!url){
+            return;
+        }
         btn.disabled = true;
         await doMarketingStuff(url, btn).finally(() => {
             btn.disabled = false;

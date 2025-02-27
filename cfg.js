@@ -12,3 +12,4 @@ export const auth0Cfg = {
     }
 }*/
 export const shouldDelay = dell;
+export const defaultInput = 'https://translatesubtitles.org/'; // process.env.LOCAL_DEV === 'true' ? 'https://translatesubtitles.org' : '';
