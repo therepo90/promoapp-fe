@@ -227,7 +227,7 @@ async function pollPromo(id, count = 0) {
     return promo;
   }
   if (promo.status === 'error') {
-    alert('Woopsies. Error. Try again.');
+    alert('Woopsies. Error. It sometimes happens. Lets try again.');
     window.location.reload();
   }
   await new Promise(resolve => setTimeout(resolve, 5000));
