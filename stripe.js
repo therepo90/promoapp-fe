@@ -1,11 +1,11 @@
 import {apiUrl} from "./cfg";
 
-export const createBuySession = async (url) => {
+export const createBuySession = async (url, entityId) => {
     console.log('buy');
     const baseUrl = apiUrl;
     const response = await fetch(baseUrl + "/api/stripe/checkout-buy", {
         method: "POST",
-        body: JSON.stringify({url}),
+        body: JSON.stringify({url, entityId}),
         headers: {
             'Content-Type': 'application/json'
         }

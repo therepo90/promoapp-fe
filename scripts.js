@@ -6,8 +6,10 @@ import {createBuySession} from "./stripe";
 
 var globals = {
     paymentUrl: undefined,
-    queriedUrl: undefined
+    queriedUrl: undefined,
+    entityId: undefined
 };
+
 
 export const  updateUI = async () => {
 
@@ -26,9 +28,10 @@ async function pollPromo(id, count =0) {
     return pollPromo(id, count+1);
 }
 
-async function getPromo(id) {
+async function getPromo(id, token) {
     const baseUrl = apiUrl;
-    const res =  await fetch(`${baseUrl}/api/promo-info/${id}`, {
+    console.log('getPromo...', {id, token});
+    const res =  await fetch(`${baseUrl}/api/promo-info/${id}?token=${token}`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json'
@@ -57,21 +60,17 @@ async function runGetPromo(url) {
 export async function callPromo(url) {
     console.log('callPromo...');
 
-    const dataContainer = document.getElementById('data-container');
-    const templateSource = document.getElementById('template').innerHTML;
-    const template = window.Handlebars.compile(templateSource);
-
     const data = await runGetPromo(url);
     /*    const data = {
             id: 'e8431b98-3699-4db8-a531-5b8194e39f15'
         }*/
     console.log('runGetPromo done', {data});
+    globals.entityId = data.id;
     if(shouldDelay) {
         await new Promise(resolve => setTimeout(resolve, 5000));
     }
     const redditData = await pollPromo(data.id);
-    const html = template(redditData.json);
-    dataContainer.innerHTML = html;
+
     return redditData;
 
 }
@@ -98,7 +97,7 @@ const funnyNames = [
     "Terry Bull"
 ];
 
-async function callStuff(url) {
+async function getPreparedResults(url, token, entityId) {
     globals.queriedUrl = url;
     document.getElementById('data-container').innerHTML = '';
     document.getElementById('loading').classList.remove('hidden');
@@ -109,9 +108,40 @@ async function callStuff(url) {
     document.getElementById('loading-succ').classList.add('hidden');
     // delay 1000 s
     //await new Promise(resolve => setTimeout(resolve, 1000000));
-    await callPromo(url).then(res => {
-        console.log('callPromo done', {res});
+    await getPromo(entityId, token).then(redditData => {
+        console.log('callPromo done', {res: redditData});
+        proceedWithRedditStuff(redditData);
         document.getElementById('loading-succ').classList.remove('hidden');
+    }).finally(() => {
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('inputs').classList.remove('hidden');
+        document.getElementById('input').value = globals.queriedUrl;
+    });
+}
+
+function proceedWithRedditStuff(redditData) {
+    const dataContainer = document.getElementById('data-container');
+    const templateSource = document.getElementById('template').innerHTML;
+    const template = window.Handlebars.compile(templateSource);
+    const html = template(redditData.json);
+    dataContainer.innerHTML = html;
+    document.getElementById('loading-succ').classList.remove('hidden');
+}
+
+async function doMarketingStuff(url) {
+    globals.queriedUrl = url;
+    document.getElementById('data-container').innerHTML = '';
+    document.getElementById('loading').classList.remove('hidden');
+
+    const name = funnyNames[Math.floor(Math.random() * funnyNames.length)];
+    document.getElementById('loading-text').innerText = `Hey my name is ${name} and I'll work for you today...gimme a sec`;
+
+    document.getElementById('loading-succ').classList.add('hidden');
+    // delay 1000 s
+    //await new Promise(resolve => setTimeout(resolve, 1000000));
+    await callPromo(url).then(redditData => {
+        console.log('callPromo done', {res: redditData});
+        proceedWithRedditStuff(redditData);
     }).finally(() => {
         document.getElementById('loading').classList.add('hidden');
         document.getElementById('inputs').classList.remove('hidden');
@@ -130,20 +160,23 @@ document.addEventListener("DOMContentLoaded", async function () {
     btn.addEventListener('click', async function () {
         const url = document.getElementById('input').value;
         btn.disabled = true;
-        await callStuff(url, btn).finally(() => {
+        await doMarketingStuff(url, btn).finally(() => {
             btn.disabled = false;
         });
     });
 
     if(token){
         const url = decodeURIComponent(urlParams.get('url'));
+        const entityId = urlParams.get('entityId');
         console.log('token, url', {url, token});
         sessionStorage.setItem('token', token);
         sessionStorage.setItem('url', url);
+        sessionStorage.setItem('entityId', entityId);
+
         window.history.replaceState({}, document.title, window.location.pathname);
         document.getElementById('inputs').classList.add('hidden');
 
-        await callStuff(url);
+        await getPreparedResults(url, token, entityId);
     }
 
 });
@@ -152,9 +185,10 @@ window.goToPost = async function (event,url) {
     event.preventDefault();
    if(url === 'Unlock'){
        document.getElementById('loading').classList.remove('hidden');
-       await window.createBuySession(globals.queriedUrl);
+       await window.createBuySession(window.globals.queriedUrl, window.globals.entityId); // might get fked when globals is not in window context
    } else{
        window.location.href = url;
    }
 };
 window.createBuySession = createBuySession;
+window.globals = globals;
