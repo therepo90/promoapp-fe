@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const urlParams = new URLSearchParams(window.location.search);
     // paymentSuccess
     const token = urlParams.get('token');
-    document.getElementById('input').value = process.env.LOCAL_DEV ? 'https://translatesubtitles.org' : '';
+    document.getElementById('input').value = process.env.LOCAL_DEV === 'true' ? 'https://translatesubtitles.org' : '';
     btn.addEventListener('click', async function () {
         const url = document.getElementById('input').value;
         btn.disabled = true;
