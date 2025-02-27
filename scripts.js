@@ -31,7 +31,7 @@ async function pollPromo(id, count =0) {
 async function getPromo(id, token) {
     const baseUrl = apiUrl;
     console.log('getPromo...', {id, token});
-    const res =  await fetch(`${baseUrl}/api/promo-info/${id}?token=${token}`, {
+    const res =  await fetch(`${baseUrl}/api/promo-info/${id}?token=${token || ''}`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json'

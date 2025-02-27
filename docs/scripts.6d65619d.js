@@ -123,8 +123,9 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.shouldDelay = exports.apiUrl = void 0;
+exports.shouldDelay = exports.dell = exports.apiUrl = void 0;
 const apiUrl = exports.apiUrl = "false" === 'true' ? 'http://localhost:3000' : 'https://apipromo.idontknowhatimdoing.com';
+const dell = exports.dell = "false" === 'true' ? false : true;
 //export const baseUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:3000' : 'https://api.translatesubtitles.org';
 /*const redirectUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:1234' : 'https://translatesubtitles.org';*/
 /*
@@ -136,7 +137,7 @@ export const auth0Cfg = {
         audience: 'https://translatesubtitles',
     }
 }*/
-const shouldDelay = exports.shouldDelay = true;
+const shouldDelay = exports.shouldDelay = dell;
 },{}],"FOZT":[function(require,module,exports) {
 "use strict";
 
@@ -233,7 +234,7 @@ async function getPromo(id, token) {
     id,
     token
   });
-  const res = await fetch(`${baseUrl}/api/promo-info/${id}?token=${token}`, {
+  const res = await fetch(`${baseUrl}/api/promo-info/${id}?token=${token || ''}`, {
     method: "GET",
     headers: {
       'Content-Type': 'application/json'

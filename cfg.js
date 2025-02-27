@@ -1,4 +1,5 @@
 export const apiUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:3000' : 'https://apipromo.idontknowhatimdoing.com';
+export const dell = process.env.LOCAL_DEV === 'true' ? false : true;
 //export const baseUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:3000' : 'https://api.translatesubtitles.org';
 /*const redirectUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:1234' : 'https://translatesubtitles.org';*/
 /*
@@ -10,4 +11,4 @@ export const auth0Cfg = {
         audience: 'https://translatesubtitles',
     }
 }*/
-export const shouldDelay = true;
+export const shouldDelay = dell;
