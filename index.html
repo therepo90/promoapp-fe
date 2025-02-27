@@ -84,7 +84,7 @@
                 <ul class="post-list">
                     {{#each this}}
                         <li>
-                            <a class="post-link" href="{{href}}">{{title}}</a>
+                            <a class="post-link" href="{{href}}" onclick="goToPost(event, '{{href}}')">{{title}}</a>
                             <span class="post-votes">({{votes}} votes)</span>
                             <p>{{truncate text 200}}</p>
                             <!--<p>Reason: {{reason}}</p>-->
@@ -114,8 +114,8 @@
 <!--    <h1 class="h1">I am an Engineer and I dont like marketing</h1>-->
     <h1 class="h1">Promote your SaaS</h1>
     <div class="container">
-        <div class="inputs">
-            <input type="text" placeholder="Your website url" class="input" id="input" value="https://teidepermit.eu">
+        <div class="inputs" id="inputs">
+            <input type="text" placeholder="Your website url" class="input" id="input" value="">
             <button class="btn btn-primary" id="go-btn">Do the marketing stuff.</button>
         </div>
 
@@ -135,7 +135,7 @@
         <div id="data-container" class="data-c"></div>
 
         <ul class="ul">
-            <li>-Finds reddit posts you can comment pretending your app to be helpful</li>
+            <li>-Finds reddit posts you can comment on pretending your app to be helpful</li>
             <li>-Generates boring non-advertise-looking content allowing you to save your dignity if you came up with one yourself.</li>
             <li>-Finds keywords and functionalities of your super-cool app you can spam your videos and posts with</li>
             <li>-You can just blame AI if your startup didnt make any money</li>

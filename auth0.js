@@ -1,5 +1,5 @@
 import {apiUrl, auth0Cfg} from "./cfg";
-import {checkResError, handleResError} from "./utils";
+import {checkResError} from "./utils";
 
 let auth0Client = null;
 
@@ -119,25 +119,3 @@ export const unsubscribe = async () => {
         });
 
 };
-export const subscribe = async () => {
-    console.log('subscribe');
-    const isAuthenticated = await auth0Client.isAuthenticated();
-    if(!isAuthenticated){
-        login();
-        return;
-    }
-    const token = await auth0Client.getTokenSilently();
-    console.log(token);
-    const baseUrl = apiUrl;
-    const response = await fetch(baseUrl+"/api/stripe/checkout-premium", {
-        method: "POST",
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    });
-
-    const data = await response.json();
-    console.log(data);
-    console.log('rdr');
-    window.location.href = data.url;
-}
