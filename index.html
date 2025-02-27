@@ -84,7 +84,7 @@
                 <ul class="post-list">
                     {{#each this}}
                         <li>
-                            <a class="post-link" href="{{href}}" onclick="goToPost(event, '{{href}}')">{{title}}</a>
+                            <a class="post-link" href="{{href}}" onclick="goToLink(event, '{{href}}')">{{title}}</a>
                             <span class="post-votes">({{votes}} votes)</span>
                             <p>{{truncate text 200}}</p>
                             <!--<p>Reason: {{reason}}</p>-->
@@ -105,7 +105,7 @@
         <h2 class="section-title">Subreddits you can spam with your app</h2>
         <ul class="sub-list">
             {{#each subs}}
-                <li><a href="{{link}}">{{name}}</a> ({{fNum users}} users)</li>
+                <li><a href="{{link}}" onclick="goToLink(event, '{{href}}')">{{name}}</a> ({{fNum users}} users)</li>
             {{/each}}
         </ul>
     </section>
@@ -142,7 +142,7 @@
             <li>-Finds keywords and functionalities of your super-cool app you can spam your videos and posts with</li>
             <li>-You can just blame AI if your startup didnt make any money</li>
             <li>-... and other shieeet</li>
-            <li>-<i>No credit card, no subscriptions, not even a clumsy account needed. Full access is 5 bucks.</i> </li>
+            <li>-<i>No credit card, no subscriptions, not even a clumsy account needed. Full access is 4.99$ bucks.</i> </li>
         </ul>
     </div>
     <div class="footer">

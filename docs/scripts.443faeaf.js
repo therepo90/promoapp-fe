@@ -357,11 +357,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     await getPreparedResults(url, token, entityId);
   }
 });
-window.goToPost = async function (event, url) {
+window.goToLink = async function (event, url) {
   event.preventDefault();
   if (url === 'Unlock') {
     document.getElementById('loading').classList.remove('hidden');
-    await window.createBuySession(window.globals.queriedUrl, window.globals.entityId); // might get fked when globals is not in window context
+    await window.createBuySession(window.globals.queriedUrl, window.globals.entityId);
   } else {
     window.location.href = url;
   }

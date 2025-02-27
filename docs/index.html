@@ -28,7 +28,7 @@
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     <link rel="stylesheet" href="styles.a0a4fe46.css">
     <script src="rg-web-component.c82a82e9.77b88d9d.js" defer=""></script>
-    <script src="scripts.baad12a5.js" defer=""></script>
+    <script src="scripts.443faeaf.js" defer=""></script>
 </head>
 <body>
 
@@ -81,7 +81,7 @@ Handlebars.registerHelper('fNum', function formatNumber(number) {
                 <ul class="post-list">
                     {{#each this}}
                         <li>
-                            <a class="post-link" href="{{href}}" onclick="goToPost(event, '{{href}}')">{{title}}</a>
+                            <a class="post-link" href="{{href}}" onclick="goToLink(event, '{{href}}')">{{title}}</a>
                             <span class="post-votes">({{votes}} votes)</span>
                             <p>{{truncate text 200}}</p>
                             <!--<p>Reason: {{reason}}</p>-->
@@ -102,7 +102,7 @@ Handlebars.registerHelper('fNum', function formatNumber(number) {
         <h2 class="section-title">Subreddits you can spam with your app</h2>
         <ul class="sub-list">
             {{#each subs}}
-                <li><a href="{{link}}">{{name}}</a> ({{fNum users}} users)</li>
+                <li><a href="{{link}}" onclick="goToLink(event, '{{href}}')">{{name}}</a> ({{fNum users}} users)</li>
             {{/each}}
         </ul>
     </section>
@@ -139,7 +139,7 @@ Handlebars.registerHelper('fNum', function formatNumber(number) {
             <li>-Finds keywords and functionalities of your super-cool app you can spam your videos and posts with</li>
             <li>-You can just blame AI if your startup didnt make any money</li>
             <li>-... and other shieeet</li>
-            <li>-<i>No credit card, no subscriptions, not even a clumsy account needed. Full access is 5 bucks.</i> </li>
+            <li>-<i>No credit card, no subscriptions, not even a clumsy account needed. Full access is 4.99$ bucks.</i> </li>
         </ul>
     </div>
     <div class="footer">
