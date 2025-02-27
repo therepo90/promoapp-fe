@@ -226,6 +226,10 @@ async function pollPromo(id, count = 0) {
   if (promo.status === 'done') {
     return promo;
   }
+  if (promo.status === 'error') {
+    alert('Woopsies. Error. Try again.');
+    window.location.reload();
+  }
   await new Promise(resolve => setTimeout(resolve, 5000));
   return pollPromo(id, count + 1);
 }
