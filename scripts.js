@@ -188,7 +188,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 window.goToLink = async function (event, url) {
+    console.log('goToLink', {event, url});
     event.preventDefault();
+    if(!url){
+        return;
+    }
    if(url === 'Unlock'){
        document.getElementById('loading').classList.remove('hidden');
        await window.createBuySession(window.globals.queriedUrl, window.globals.entityId);

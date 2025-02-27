@@ -1,5 +1,52 @@
-parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcelRequire,u="function"==typeof require&&require;function f(t,n){if(!r[t]){if(!e[t]){var i="function"==typeof parcelRequire&&parcelRequire;if(!n&&i)return i(t,!0);if(o)return o(t,!0);if(u&&"string"==typeof t)return u(t);var c=new Error("Cannot find module '"+t+"'");throw c.code="MODULE_NOT_FOUND",c}p.resolve=function(r){return e[t][1][r]||r},p.cache={};var l=r[t]=new f.Module(t);e[t][0].call(l.exports,p,l,l.exports,this)}return r[t].exports;function p(e){return f(p.resolve(e))}}f.isParcelRequire=!0,f.Module=function(e){this.id=e,this.bundle=f,this.exports={}},f.modules=e,f.cache=r,f.parent=o,f.register=function(r,t){e[r]=[function(e,r){r.exports=t},{}]};for(var c=0;c<t.length;c++)try{f(t[c])}catch(e){i||(i=e)}if(t.length){var l=f(t[t.length-1]);"object"==typeof exports&&"undefined"!=typeof module?module.exports=l:"function"==typeof define&&define.amd?define(function(){return l}):n&&(this[n]=l)}if(parcelRequire=f,i)throw i;return f}({"ltxm":[function(require,module,exports) {
-module.exports = `#version 100
+parcelRequire = function (e, r, t, n) {
+    var i, o = "function" == typeof parcelRequire && parcelRequire, u = "function" == typeof require && require;
+
+    function f(t, n) {
+        if (!r[t]) {
+            if (!e[t]) {
+                var i = "function" == typeof parcelRequire && parcelRequire;
+                if (!n && i) return i(t, !0);
+                if (o) return o(t, !0);
+                if (u && "string" == typeof t) return u(t);
+                var c = new Error("Cannot find module '" + t + "'");
+                throw c.code = "MODULE_NOT_FOUND", c
+            }
+            p.resolve = function (r) {
+                return e[t][1][r] || r
+            }, p.cache = {};
+            var l = r[t] = new f.Module(t);
+            e[t][0].call(l.exports, p, l, l.exports, this)
+        }
+        return r[t].exports;
+
+        function p(e) {
+            return f(p.resolve(e))
+        }
+    }
+
+    f.isParcelRequire = !0, f.Module = function (e) {
+        this.id = e, this.bundle = f, this.exports = {}
+    }, f.modules = e, f.cache = r, f.parent = o, f.register = function (r, t) {
+        e[r] = [function (e, r) {
+            r.exports = t
+        }, {}]
+    };
+    for (var c = 0; c < t.length; c++) try {
+        f(t[c])
+    } catch (e) {
+        i || (i = e)
+    }
+    if (t.length) {
+        var l = f(t[t.length - 1]);
+        "object" == typeof exports && "undefined" != typeof module ? module.exports = l : "function" == typeof define && define.amd ? define(function () {
+            return l
+        }) : n && (this[n] = l)
+    }
+    if (parcelRequire = f, i) throw i;
+    return f
+}({
+    "ltxm": [function (require, module, exports) {
+        module.exports = `#version 100
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -15,8 +62,8 @@ void main()
     mainImage(gl_FragColor, gl_FragCoord.xy);
 }
 `
-},{}],"uAQe":[function(require,module,exports) {
-module.exports = `#version 100
+    }, {}], "uAQe": [function (require, module, exports) {
+        module.exports = `#version 100
 
 attribute vec2 a_position;
 
@@ -24,8 +71,8 @@ void main() {
     gl_Position = vec4(a_position, 0, 1);
 }
 `
-},{}],"dZ6J":[function(require,module,exports) {
-module.exports = `
+    }, {}], "dZ6J": [function (require, module, exports) {
+        module.exports = `
 float sdSphere( vec3 p, float s ) // s -radius
 {
     return length(p)-s;
@@ -184,8 +231,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     //fragColor= vec4(vec3(d),1.);
 }
 `
-},{}],"wsWt":[function(require,module,exports) {
-module.exports = `// gelami has created a nice fix for the creases: https://www.shadertoy.com/view/7l3GDS
+    }, {}], "wsWt": [function (require, module, exports) {
+        module.exports = `// gelami has created a nice fix for the creases: https://www.shadertoy.com/view/7l3GDS
 
 #define POINT_COUNT 8
 
@@ -327,6 +374,80 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ){
     fragColor = vec4(col,1.0);
 }
 `
-},{}],"eVc1":[function(require,module,exports) {
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.createRgLoader=void 0;const e=(e,t)=>{customElements.define(t,class extends HTMLElement{constructor(){super(),this.attachShadow({mode:"open"}),this.fragmentCode=e}connectedCallback(){console.log("connected"+t),this.shadowRoot.innerHTML='\n            <style>\n                :host { display: block; width: 100%; height: 100%; }\n            </style>\n            <canvas id="rg-wgl-loader-canvas" width="250px" height="250px"></canvas>\n        ',this.mouse={x:0,y:0},this.startTime=Date.now(),this.setupWebGL(),this.setupMouseListeners()}setupWebGL(){const e=this.shadowRoot.getElementById("rg-wgl-loader-canvas"),t=e.getContext("webgl");if(!t)return console.error("Unable to initialize WebGL. Your browser may not support it."),void alert("Unable to initialize WebGL. Your browser may not support it.");let r=require("./fragment-main.glsl");const o=this.fragmentCode;r=r.replace('#include "fragment.glsl"',o);const a=require("./vertex.glsl"),i=r,n=this.compileShader(t,t.VERTEX_SHADER,a),s=this.compileShader(t,t.FRAGMENT_SHADER,i);if(!n||!s)return console.error("Shader compilation failed."),void alert("Shader compilation failed.");const l=this.createProgram(t,n,s);if(!l)return console.error("Shader program linking failed."),void alert("Shader program linking failed.");const c=t.createBuffer();t.bindBuffer(t.ARRAY_BUFFER,c);const d=new Float32Array([-1,-1,-1,1,1,1,-1,-1,1,1,1,-1]);t.bufferData(t.ARRAY_BUFFER,d,t.STATIC_DRAW),t.useProgram(l);const g=t.getAttribLocation(l,"a_position");if(-1===g)return console.error("Unable to get attribute location for a_position"),void alert("Unable to get attribute location for a_position");t.enableVertexAttribArray(g),t.bindBuffer(t.ARRAY_BUFFER,c),t.vertexAttribPointer(g,2,t.FLOAT,!1,0,0);const h=t.getUniformLocation(l,"iResolution"),u=t.getUniformLocation(l,"iMouse"),m=t.getUniformLocation(l,"iTime");if(null===h||null===m)return console.error("Unable to get uniform location(s)"),void alert("Unable to get uniform location(s)");t.uniform2f(h,e.width,e.height);const f=()=>{t.clearColor(0,0,0,1),t.clear(t.COLOR_BUFFER_BIT),t.uniform2f(u,this.mouse.x,this.mouse.y),t.uniform1f(m,(Date.now()-this.startTime)/1e3),t.drawArrays(t.TRIANGLES,0,6)},p=()=>{f(),requestAnimationFrame(p)};p()}compileShader(e,t,r){const o=e.createShader(t);return e.shaderSource(o,r),e.compileShader(o),e.getShaderParameter(o,e.COMPILE_STATUS)?o:(console.error(`Error compiling shader: ${e.getShaderInfoLog(o)}`),alert("`Error compiling shader: ${gl.getShaderInfoLog(shader)}`"),e.deleteShader(o),null)}createProgram(e,t,r){const o=e.createProgram();return e.attachShader(o,t),e.attachShader(o,r),e.linkProgram(o),e.getProgramParameter(o,e.LINK_STATUS)?o:(console.error(`Unable to initialize the shader program: ${e.getProgramInfoLog(o)}`),alert(`Unable to initialize the shader program: ${e.getProgramInfoLog(o)}`),null)}setupMouseListeners(){const e=this.shadowRoot.getElementById("rg-wgl-loader-canvas");document.addEventListener("mousemove",t=>{const r=e.getBoundingClientRect();this.mouse.x=t.clientX-r.left,this.mouse.y=r.height-(t.clientY-r.top)}),e.addEventListener("touchmove",t=>{t.preventDefault();const r=e.getBoundingClientRect();this.mouse.x=t.touches[0].clientX-r.left,this.mouse.y=r.height-(t.touches[0].clientY-r.top)},{passive:!1})}})};exports.createRgLoader=e,e(require("../loaders/loader1/fragment.glsl"),"rg-wgl-loader"),e(require("../loaders/loader2/fragment.glsl"),"rg-wgl-loader-heart");
-},{"./fragment-main.glsl":"ltxm","./vertex.glsl":"uAQe","../loaders/loader1/fragment.glsl":"dZ6J","../loaders/loader2/fragment.glsl":"wsWt"}]},{},["eVc1"], null)
+    }, {}], "eVc1": [function (require, module, exports) {
+        "use strict";
+        Object.defineProperty(exports, "__esModule", {value: !0}), exports.createRgLoader = void 0;
+        const e = (e, t) => {
+            customElements.define(t, class extends HTMLElement {
+                constructor() {
+                    super(), this.attachShadow({mode: "open"}), this.fragmentCode = e
+                }
+
+                connectedCallback() {
+                    console.log("connected" + t), this.shadowRoot.innerHTML = '\n            <style>\n                :host { display: block; width: 100%; height: 100%; }\n            </style>\n            <canvas id="rg-wgl-loader-canvas" width="250px" height="250px"></canvas>\n        ', this.mouse = {
+                        x: 0,
+                        y: 0
+                    }, this.startTime = Date.now(), this.setupWebGL(), this.setupMouseListeners()
+                }
+
+                setupWebGL() {
+                    const e = this.shadowRoot.getElementById("rg-wgl-loader-canvas"), t = e.getContext("webgl");
+                    if (!t) return console.error("Unable to initialize WebGL. Your browser may not support it."), void alert("Unable to initialize WebGL. Your browser may not support it.");
+                    let r = require("./fragment-main.glsl");
+                    const o = this.fragmentCode;
+                    r = r.replace('#include "fragment.glsl"', o);
+                    const a = require("./vertex.glsl"), i = r, n = this.compileShader(t, t.VERTEX_SHADER, a),
+                        s = this.compileShader(t, t.FRAGMENT_SHADER, i);
+                    if (!n || !s) return console.error("Shader compilation failed."), void alert("Shader compilation failed.");
+                    const l = this.createProgram(t, n, s);
+                    if (!l) return console.error("Shader program linking failed."), void alert("Shader program linking failed.");
+                    const c = t.createBuffer();
+                    t.bindBuffer(t.ARRAY_BUFFER, c);
+                    const d = new Float32Array([-1, -1, -1, 1, 1, 1, -1, -1, 1, 1, 1, -1]);
+                    t.bufferData(t.ARRAY_BUFFER, d, t.STATIC_DRAW), t.useProgram(l);
+                    const g = t.getAttribLocation(l, "a_position");
+                    if (-1 === g) return console.error("Unable to get attribute location for a_position"), void alert("Unable to get attribute location for a_position");
+                    t.enableVertexAttribArray(g), t.bindBuffer(t.ARRAY_BUFFER, c), t.vertexAttribPointer(g, 2, t.FLOAT, !1, 0, 0);
+                    const h = t.getUniformLocation(l, "iResolution"), u = t.getUniformLocation(l, "iMouse"),
+                        m = t.getUniformLocation(l, "iTime");
+                    if (null === h || null === m) return console.error("Unable to get uniform location(s)"), void alert("Unable to get uniform location(s)");
+                    t.uniform2f(h, e.width, e.height);
+                    const f = () => {
+                        t.clearColor(0, 0, 0, 1), t.clear(t.COLOR_BUFFER_BIT), t.uniform2f(u, this.mouse.x, this.mouse.y), t.uniform1f(m, (Date.now() - this.startTime) / 1e3), t.drawArrays(t.TRIANGLES, 0, 6)
+                    }, p = () => {
+                        f(), requestAnimationFrame(p)
+                    };
+                    p()
+                }
+
+                compileShader(e, t, r) {
+                    const o = e.createShader(t);
+                    return e.shaderSource(o, r), e.compileShader(o), e.getShaderParameter(o, e.COMPILE_STATUS) ? o : (console.error(`Error compiling shader: ${e.getShaderInfoLog(o)}`), alert("`Error compiling shader: ${gl.getShaderInfoLog(shader)}`"), e.deleteShader(o), null)
+                }
+
+                createProgram(e, t, r) {
+                    const o = e.createProgram();
+                    return e.attachShader(o, t), e.attachShader(o, r), e.linkProgram(o), e.getProgramParameter(o, e.LINK_STATUS) ? o : (console.error(`Unable to initialize the shader program: ${e.getProgramInfoLog(o)}`), alert(`Unable to initialize the shader program: ${e.getProgramInfoLog(o)}`), null)
+                }
+
+                setupMouseListeners() {
+                    const e = this.shadowRoot.getElementById("rg-wgl-loader-canvas");
+                    document.addEventListener("mousemove", t => {
+                        const r = e.getBoundingClientRect();
+                        this.mouse.x = t.clientX - r.left, this.mouse.y = r.height - (t.clientY - r.top)
+                    }), e.addEventListener("touchmove", t => {
+                        t.preventDefault();
+                        const r = e.getBoundingClientRect();
+                        this.mouse.x = t.touches[0].clientX - r.left, this.mouse.y = r.height - (t.touches[0].clientY - r.top)
+                    }, {passive: !1})
+                }
+            })
+        };
+        exports.createRgLoader = e, e(require("../loaders/loader1/fragment.glsl"), "rg-wgl-loader"), e(require("../loaders/loader2/fragment.glsl"), "rg-wgl-loader-heart");
+    }, {
+        "./fragment-main.glsl": "ltxm",
+        "./vertex.glsl": "uAQe",
+        "../loaders/loader1/fragment.glsl": "dZ6J",
+        "../loaders/loader2/fragment.glsl": "wsWt"
+    }]
+}, {}, ["eVc1"], null)

@@ -1,5 +1,6 @@
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="app.less"/>
     <meta charset="utf-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -82,6 +83,9 @@
     </div>
     <section>
         <h2 class="section-title">Reddit Posts</h2>
+        <div class="small-text">
+            Free version is limited. Full access is 4.99$.
+        </div>
         {{#each posts}}
             <div class="subreddit-section">
                 <h3 class="subr"><a href="https://reddit.com/r/{{@key}}">/r/{{@key}}</a></h3>
@@ -106,10 +110,13 @@
 
 
     <section>
-        <h2 class="section-title">Subreddits you can spam with your app</h2>
+        <h2 class="section-title">Subreddits related to your app</h2>
+        <div class="small-text">
+            Free version is limited. Full access is 4.99$.
+        </div>
         <ul class="sub-list">
             {{#each subs}}
-                <li><a href="{{link}}" onclick="goToLink(event, '{{href}}')">{{name}}</a> ({{fNum users}} users)</li>
+                <li><a href="{{link}}" onclick="goToLink(event, '{{link}}')">{{name}}</a> ({{fNum users}} users)</li>
             {{/each}}
         </ul>
     </section>
@@ -124,6 +131,7 @@
             <input type="text" placeholder="Your website url" class="input" id="input" value="">
             <button class="btn btn-primary" id="go-btn">Do the marketing stuff.</button>
         </div>
+
 
         <div id="loading" class="hidden loading">
             <div> <span id="loading-text">Hey my name is John and I'll look it up for you...gimme a sec</span>
@@ -146,7 +154,7 @@
             <li>-Finds keywords and functionalities of your super-cool app you can spam your videos and posts with</li>
             <li>-You can just blame AI if your startup didnt make any money</li>
             <li>-... and other shieeet</li>
-            <li>-<i>No credit card, no subscriptions, not even a clumsy account needed. Full access is 4.99$ bucks.</i> </li>
+            <!--<li>-<i>No credit card, no subscriptions, not even a clumsy account needed. Freemium - full access is 4.99$ bucks.</i> </li>-->
         </ul>
     </div>
     <div class="footer">
