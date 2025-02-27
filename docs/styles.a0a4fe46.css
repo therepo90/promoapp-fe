@@ -3667,6 +3667,7 @@ select.stack:focus + select {
   margin: 0;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 20px;
 }
 .sub-list li {
   margin-bottom: 0.5em;

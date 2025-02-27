@@ -10,4 +10,4 @@ export const auth0Cfg = {
         audience: 'https://translatesubtitles',
     }
 }*/
-export const shouldDelay = false;
+export const shouldDelay = true;
