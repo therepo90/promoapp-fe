@@ -379,4 +379,19 @@ window.goToLink = async function (event, url) {
 };
 window.createBuySession = _stripe.createBuySession;
 window.globals = globals;
+window.copyToClipboard = function copyToClipboard(element) {
+  const text = element.innerText; //
+  navigator.clipboard.writeText(text).then(() => {
+    alert("Copied to clipboard!");
+  }).catch(err => {
+    console.error("Error copying text: ", err);
+  });
+};
+window.showAnswer = function showAnswer(index, btn) {
+  const answerElement = document.getElementById(`answer-${index}`);
+  if (answerElement) {
+    answerElement.classList.remove('hidden');
+  }
+  btn.style.display = "none"; // Ukrywa przycisk
+};
 },{"./cfg":"mhI4","./utils":"FOZT","./stripe":"Uj2q"}]},{},["imtx"], null)

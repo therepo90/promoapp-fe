@@ -33,7 +33,7 @@
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     <link rel="stylesheet" href="styles.4e18fad5.css">
     <script src="rg-web-component.c82a82e9.77b88d9d.js" defer=""></script>
-    <script src="scripts.4042cfac.js" defer=""></script>
+    <script src="scripts.3db83d8b.js" defer=""></script>
 </head>
 <body>
 
@@ -43,6 +43,9 @@
     return new Handlebars.SafeString(new_str + '...');
   }
   return str;
+});
+Handlebars.registerHelper('ifEq', function (arg1, arg2, options) {
+  return arg1 == arg2 ? options.fn(this) : options.inverse(this);
 });
 Handlebars.registerHelper('fNum', function formatNumber(number) {
   if (number >= 1000000) {
@@ -92,7 +95,19 @@ Handlebars.registerHelper('fNum', function formatNumber(number) {
                             <a class="post-link" href="{{href}}" onclick="goToLink(event, '{{href}}')">{{title}}</a>
                             <span class="post-votes">({{votes}} votes)</span>
                             <p>{{truncate text 200}}</p>
-                            <!--<p>Reason: {{reason}}</p>-->
+
+
+                            <div class="{{#ifEq href "Unlock"}}hidden{{/ifEq}}">
+                                <p class="summary"><b>Summary:</b> {{reason}}</p>
+                                <p class="answer">
+                                    <b>Your answer:</b>
+                                    <button onclick="showAnswer({{@index}}, this)">Show</button>
+                                    <span id="answer-{{@index}}" class="hidden">
+                                        (<span class="small-text">Click text to copy</span>)
+                                        <span onclick="copyToClipboard(this)">{{answer}}</span>
+                                    </span>
+                                </p>
+                            </div>
                         </li>
                     {{/each}}
                 </ul>

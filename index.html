@@ -46,6 +46,10 @@
         return str;
     });
 
+    Handlebars.registerHelper('ifEq', function(arg1, arg2, options) {
+        return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+    });
+
     Handlebars.registerHelper('fNum', function formatNumber(number) {
         if (number >= 1000000) {
             return (number / 1000000).toFixed(1) + 'M';
@@ -95,7 +99,19 @@
                             <a class="post-link" href="{{href}}" onclick="goToLink(event, '{{href}}')">{{title}}</a>
                             <span class="post-votes">({{votes}} votes)</span>
                             <p>{{truncate text 200}}</p>
-                            <!--<p>Reason: {{reason}}</p>-->
+
+
+                            <div class="{{#ifEq href "Unlock"}}hidden{{/ifEq}}">
+                                <p class="summary"><b>Summary:</b> {{reason}}</p>
+                                <p class="answer">
+                                    <b>Your answer:</b>
+                                    <button onclick="showAnswer({{@index}}, this)">Show</button>
+                                    <span id="answer-{{@index}}" class="hidden">
+                                        (<span class="small-text">Click text to copy</span>)
+                                        <span onclick="copyToClipboard(this)">{{answer}}</span>
+                                    </span>
+                                </p>
+                            </div>
                         </li>
                     {{/each}}
                 </ul>
