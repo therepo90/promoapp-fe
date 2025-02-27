@@ -138,7 +138,7 @@ export const auth0Cfg = {
     }
 }*/
 const shouldDelay = exports.shouldDelay = dell;
-const defaultInput = exports.defaultInput = 'https://translatesubtitles.org/'; // process.env.LOCAL_DEV === 'true' ? 'https://translatesubtitles.org' : '';
+const defaultInput = exports.defaultInput = 'https://promo.idontknowhatimdoing.com/'; // process.env.LOCAL_DEV === 'true' ? 'https://translatesubtitles.org' : '';
 },{}],"FOZT":[function(require,module,exports) {
 "use strict";
 
