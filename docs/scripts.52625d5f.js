@@ -370,15 +370,13 @@ window.goToLink = async function (event, url) {
     event,
     url
   });
-  event.preventDefault();
   if (!url) {
     return;
   }
   if (url === 'Unlock') {
+    event.preventDefault();
     document.getElementById('loading').classList.remove('hidden');
     await window.createBuySession(window.globals.queriedUrl, window.globals.entityId);
-  } else {
-    window.location.href = url;
   }
 };
 window.createBuySession = _stripe.createBuySession;
