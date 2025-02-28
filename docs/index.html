@@ -101,8 +101,8 @@ Handlebars.registerHelper('fNum', function formatNumber(number) {
                                 <p class="summary"><b>Summary:</b> {{reason}}</p>
                                 <p class="answer">
                                     <b>Your answer:</b>
-                                    <button onclick="showAnswer({{@index}}, this)">Show</button>
-                                    <span id="answer-{{@index}}" class="hidden">
+                                    <button onclick="showAnswer('{{subr}}-{{@index}}', this)">Show</button>
+                                    <span id="answer-{{subr}}-{{@index}}" class="hidden">
                                         (<span class="small-text">Click text to copy</span>)
                                         <span onclick="copyToClipboard(this)">{{answer}}</span>
                                     </span>
