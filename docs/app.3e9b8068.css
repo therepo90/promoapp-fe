@@ -271,3 +271,27 @@ rg-wgl-loader {
   font-size: 12px;
   color: gray;
 }
+.copyable-hashtag {
+  font-size: 12px;
+  cursor: pointer;
+  /* Indicate it's clickable */
+  background-color: #f0f0f0;
+  /* Light gray background */
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 5px;
+  display: inline-block;
+  /* Allows margin to be applied on all sides */
+}
+.copyable-hashtag:hover {
+  background-color: #e0e0e0;
+  /* Slightly darker on hover */
+}
+section {
+  width: 100%;
+}
+.hashtags h3 {
+  font-size: 12px;
+  display: inline-block;
+}
