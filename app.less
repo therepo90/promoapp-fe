@@ -251,3 +251,50 @@ section {
         margin: 0 10px;
     }
 }
+
+
+////
+/* Style dla galerii obrazów */
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+/* Style dla pojedynczego elementu obrazu */
+.image-item {
+  margin: 5px;
+  border: 1px solid #ddd;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  text-align: center; /* Wyśrodkowanie tekstu i linku */
+}
+
+.image-item:hover {
+  transform: scale(1.05);
+}
+
+/* Style dla miniatur */
+.thumbnail {
+  width: 256px;
+  height: 256px;
+  object-fit: cover;
+  display: block; /* Usuń dodatkowe odstępy pod obrazem */
+  margin-bottom: 5px; /* Odstęp między obrazem a linkiem */
+}
+
+/* Style dla linku do pobrania */
+.download-link {
+  display: block;
+  padding: 5px 10px;
+  background-color: #4CAF50;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.download-link:hover {
+  background-color: #3e8e41;
+}

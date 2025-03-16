@@ -71,7 +71,7 @@ function proceedWithMediaStuff(data) {
     const dataContainer = document.getElementById('data-container');
     const templateSource = document.getElementById('media-template').innerHTML;
     const template = window.Handlebars.compile(templateSource);
-    const html = template(data.json);
+    const html = template(data.json.generatedImages);
     dataContainer.innerHTML = html;
     document.getElementById('loading-succ').classList.remove('hidden');
 }
@@ -163,6 +163,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         document.getElementById('inputs').classList.add('hidden');
 
         await getPreparedResults(url, token, entityId);
+    }
+
+    if(process.env.LOCAL_DEV!=='true'){
+        btnMedia.classList.add('hidden');
     }
 
 });

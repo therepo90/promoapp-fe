@@ -140,6 +140,46 @@ export const auth0Cfg = {
 const shouldDelay = exports.shouldDelay = dell;
 const defaultInput = exports.defaultInput = "false" === 'true' ? 'https://teidepermit.eu/' : 'https://promo.idontknowhatimdoing.com/';
 //export const defaultInput = 'https://promo.idontknowhatimdoing.com/'; // process.env.LOCAL_DEV === 'true' ? 'https://translatesubtitles.org' : '';
+},{}],"Uj2q":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.createBuySession = void 0;
+var _cfg = require("./cfg");
+const createBuySession = async (url, entityId) => {
+  console.log('buy');
+  const baseUrl = _cfg.apiUrl;
+  const response = await fetch(baseUrl + "/api/stripe/checkout-buy", {
+    method: "POST",
+    body: JSON.stringify({
+      url,
+      entityId
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const data = await response.json();
+  console.log(data);
+  console.log('rdr');
+  window.location.href = data.url;
+};
+exports.createBuySession = createBuySession;
+},{"./cfg":"mhI4"}],"y5FJ":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.globalVars = void 0;
+const globalVars = exports.globalVars = {
+  paymentUrl: undefined,
+  queriedUrl: undefined,
+  redditEntityId: undefined,
+  mediaEntityId: undefined
+};
 },{}],"FOZT":[function(require,module,exports) {
 "use strict";
 
@@ -170,90 +210,21 @@ const handleResError = errObject => {
   console.error(errObject);
 };
 exports.handleResError = handleResError;
-},{}],"Uj2q":[function(require,module,exports) {
+},{}],"LVu9":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createBuySession = void 0;
-var _cfg = require("./cfg");
-const createBuySession = async (url, entityId) => {
-  console.log('buy');
-  const baseUrl = _cfg.apiUrl;
-  const response = await fetch(baseUrl + "/api/stripe/checkout-buy", {
-    method: "POST",
-    body: JSON.stringify({
-      url,
-      entityId
-    }),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-  const data = await response.json();
-  console.log(data);
-  console.log('rdr');
-  window.location.href = data.url;
-};
-exports.createBuySession = createBuySession;
-},{"./cfg":"mhI4"}],"imtx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.callPromo = callPromo;
-exports.updateUI = void 0;
+exports.apiCall = apiCall;
+exports.poll = poll;
 var _cfg = require("./cfg");
 var _utils = require("./utils");
-var _stripe = require("./stripe");
-//const host = 'http://localhost:3000';
+// /api/reddit
 
-var globals = {
-  paymentUrl: undefined,
-  queriedUrl: undefined,
-  entityId: undefined
-};
-const updateUI = async () => {};
-
-//polling fn to get promo based on status, use getPromo
-exports.updateUI = updateUI;
-async function pollPromo(id, count = 0) {
-  if (count > 100) {
-    throw new Error('Timeout');
-  }
-  const promo = await getPromo(id);
-  if (promo.status === 'done') {
-    return promo;
-  }
-  if (promo.status === 'error') {
-    alert('Woopsies. Error. It sometimes happens. Lets try again.');
-    window.location.reload();
-  }
-  await new Promise(resolve => setTimeout(resolve, 5000));
-  return pollPromo(id, count + 1);
-}
-async function getPromo(id, token) {
+async function apiCall(url, path) {
   const baseUrl = _cfg.apiUrl;
-  console.log('getPromo...', {
-    id,
-    token
-  });
-  const tokenQuery = token ? `token=${token}` : '';
-  const res = await fetch(`${baseUrl}/api/promo-info/${id}?${tokenQuery}`, {
-    method: "GET",
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-  await (0, _utils.checkResError)(res);
-  const data = await res.json();
-  return data;
-}
-async function runGetPromo(url) {
-  const baseUrl = _cfg.apiUrl;
-  const res = await fetch(baseUrl + "/api/promo-info", {
+  const res = await fetch(`${baseUrl}${path}`, {
     method: "POST",
     body: JSON.stringify({
       url
@@ -266,25 +237,134 @@ async function runGetPromo(url) {
   const data = await res.json();
   return data;
 }
-async function callPromo(url) {
-  console.log('callPromo...');
-  const data = await runGetPromo(url);
+async function poll(id, fn, count = 0) {
+  if (count > 100) {
+    throw new Error('Timeout');
+  }
+  const promo = await fn();
+  if (promo.status === 'done') {
+    return promo;
+  }
+  if (promo.status === 'error') {
+    alert('Woopsies. Error. It sometimes happens. Lets try again.');
+    window.location.reload();
+  }
+  await new Promise(resolve => setTimeout(resolve, 5000));
+  return poll(id, fn, count + 1);
+}
+},{"./cfg":"mhI4","./utils":"FOZT"}],"tUqo":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.callReddit = callReddit;
+exports.getReddit = getReddit;
+var _globalVars = require("./globalVars");
+var _cfg = require("./cfg");
+var _utils = require("./utils");
+var _api = require("./api");
+//polling fn to get promo based on status, use getReddit
+
+async function getReddit(id, token) {
+  const baseUrl = _cfg.apiUrl;
+  console.log('getReddit...', {
+    id,
+    token
+  });
+  const tokenQuery = token ? `token=${token}` : '';
+  const res = await fetch(`${baseUrl}/api/reddit/${id}?${tokenQuery}`, {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  await (0, _utils.checkResError)(res);
+  const data = await res.json();
+  return data;
+}
+async function callReddit(url) {
+  console.log('callReddit...');
+  const data = await (0, _api.apiCall)(url, '/api/reddit');
   /*    const data = {
           id: 'e8431b98-3699-4db8-a531-5b8194e39f15'
       }*/
-  console.log('runGetPromo done', {
+  console.log('apiCall done', {
     data
   });
-  globals.entityId = data.id;
+  _globalVars.globalVars.redditEntityId = data.id;
   if (_cfg.shouldDelay) {
     await new Promise(resolve => setTimeout(resolve, 5000));
   }
-  const redditData = await pollPromo(data.id);
+  const redditData = await (0, _api.poll)(data.id, async () => getReddit(data.id));
   return redditData;
 }
+},{"./globalVars":"y5FJ","./cfg":"mhI4","./utils":"FOZT","./api":"LVu9"}],"hh4g":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.callMedia = callMedia;
+exports.getMedia = getMedia;
+var _globalVars = require("./globalVars");
+var _cfg = require("./cfg");
+var _utils = require("./utils");
+var _api = require("./api");
+async function getMedia(id, token) {
+  const baseUrl = _cfg.apiUrl;
+  console.log('getMedia...', {
+    id,
+    token
+  });
+  const tokenQuery = token ? `token=${token}` : '';
+  const res = await fetch(`${baseUrl}/api/media/${id}?${tokenQuery}`, {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  await (0, _utils.checkResError)(res);
+  const data = await res.json();
+  return data;
+}
+async function callMedia(url) {
+  console.log('callMedia...');
+  const data = await (0, _api.apiCall)(url, '/api/media');
+  /*    const data = {
+          id: 'e8431b98-3699-4db8-a531-5b8194e39f15'
+      }*/
+  console.log('apiCall done', {
+    data
+  });
+  _globalVars.globalVars.mediaEntityId = data.id;
+  if (_cfg.shouldDelay) {
+    await new Promise(resolve => setTimeout(resolve, 5000));
+  }
+  const resData = await (0, _api.poll)(data.id, async () => getMedia(data.id));
+  return resData;
+}
+},{"./globalVars":"y5FJ","./cfg":"mhI4","./utils":"FOZT","./api":"LVu9"}],"imtx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.doMediaStuff = doMediaStuff;
+exports.doRedditStuff = doRedditStuff;
+exports.updateUI = void 0;
+var _cfg = require("./cfg");
+var _stripe = require("./stripe");
+var _globalVars = require("./globalVars");
+var _reddit = require("./reddit");
+var _media = require("./media");
+//const host = 'http://localhost:3000';
+
+const updateUI = async () => {};
+exports.updateUI = updateUI;
 const funnyNames = ["Bob McMuffin", "Chad Thundercock", "Sir Loinsteak", "Jimmy NoToes", "Albie Back", "Barb Dwyer", "Hugh Jass", "Anita Bath", "Ben Dover", "Sal Monella", "Rick O'Shea", "Dustin Trousers", "Stan Dupp", "Pat Myback", "Ella Vator", "Bill Board", "Sue Permann", "Otto Correct", "Paige Turner", "Terry Bull"];
 async function getPreparedResults(url, token, entityId) {
-  globals.queriedUrl = url;
+  _globalVars.globalVars.queriedUrl = url;
   document.getElementById('data-container').innerHTML = '';
   document.getElementById('loading').classList.remove('hidden');
   const name = funnyNames[Math.floor(Math.random() * funnyNames.length)];
@@ -292,8 +372,8 @@ async function getPreparedResults(url, token, entityId) {
   document.getElementById('loading-succ').classList.add('hidden');
   // delay 1000 s
   //await new Promise(resolve => setTimeout(resolve, 1000000));
-  await getPromo(entityId, token).then(redditData => {
-    console.log('callPromo done', {
+  await (0, _reddit.getReddit)(entityId, token).then(redditData => {
+    console.log('callReddit done', {
       res: redditData
     });
     proceedWithRedditStuff(redditData);
@@ -301,19 +381,29 @@ async function getPreparedResults(url, token, entityId) {
   }).finally(() => {
     document.getElementById('loading').classList.add('hidden');
     document.getElementById('inputs').classList.remove('hidden');
-    document.getElementById('input').value = globals.queriedUrl;
+    document.getElementById('input').value = _globalVars.globalVars.queriedUrl;
   });
+
+  // media? later maybe.
 }
-function proceedWithRedditStuff(redditData) {
+function proceedWithRedditStuff(data) {
   const dataContainer = document.getElementById('data-container');
-  const templateSource = document.getElementById('template').innerHTML;
+  const templateSource = document.getElementById('reddit-template').innerHTML;
   const template = window.Handlebars.compile(templateSource);
-  const html = template(redditData.json);
+  const html = template(data.json);
   dataContainer.innerHTML = html;
   document.getElementById('loading-succ').classList.remove('hidden');
 }
-async function doMarketingStuff(url) {
-  globals.queriedUrl = url;
+function proceedWithMediaStuff(data) {
+  const dataContainer = document.getElementById('data-container');
+  const templateSource = document.getElementById('media-template').innerHTML;
+  const template = window.Handlebars.compile(templateSource);
+  const html = template(data.json.generatedImages);
+  dataContainer.innerHTML = html;
+  document.getElementById('loading-succ').classList.remove('hidden');
+}
+async function doMediaStuff(url) {
+  _globalVars.globalVars.queriedUrl = url;
   document.getElementById('data-container').innerHTML = '';
   document.getElementById('loading').classList.remove('hidden');
   const name = funnyNames[Math.floor(Math.random() * funnyNames.length)];
@@ -321,34 +411,65 @@ async function doMarketingStuff(url) {
   document.getElementById('loading-succ').classList.add('hidden');
   // delay 1000 s
   //await new Promise(resolve => setTimeout(resolve, 1000000));
-  await callPromo(url).then(redditData => {
-    console.log('callPromo done', {
+  await (0, _media.callMedia)(url).then(redditData => {
+    console.log('callReddit done', {
+      res: redditData
+    });
+    proceedWithMediaStuff(redditData);
+  }).finally(() => {
+    document.getElementById('loading').classList.add('hidden');
+    document.getElementById('inputs').classList.remove('hidden');
+    document.getElementById('input').value = _globalVars.globalVars.queriedUrl;
+  });
+}
+async function doRedditStuff(url) {
+  _globalVars.globalVars.queriedUrl = url;
+  document.getElementById('data-container').innerHTML = '';
+  document.getElementById('loading').classList.remove('hidden');
+  const name = funnyNames[Math.floor(Math.random() * funnyNames.length)];
+  document.getElementById('loading-text').innerText = `Hey my name is ${name} and I'll work for you today...gimme a sec`;
+  document.getElementById('loading-succ').classList.add('hidden');
+  // delay 1000 s
+  //await new Promise(resolve => setTimeout(resolve, 1000000));
+  await (0, _reddit.callReddit)(url).then(redditData => {
+    console.log('callReddit done', {
       res: redditData
     });
     proceedWithRedditStuff(redditData);
   }).finally(() => {
     document.getElementById('loading').classList.add('hidden');
     document.getElementById('inputs').classList.remove('hidden');
-    document.getElementById('input').value = globals.queriedUrl;
+    document.getElementById('input').value = _globalVars.globalVars.queriedUrl;
   });
 }
 document.addEventListener("DOMContentLoaded", async function () {
   console.log('DOMContentLoaded init...');
-  const btn = document.getElementById('go-btn');
 
   // check for url query param token and save to session storage and remove from url
   const urlParams = new URLSearchParams(window.location.search);
   // paymentSuccess
   const token = urlParams.get('token');
   document.getElementById('input').value = _cfg.defaultInput;
-  btn.addEventListener('click', async function () {
+  const btnReddit = document.getElementById('go-btn-reddit');
+  btnReddit.addEventListener('click', async function () {
     const url = (document.getElementById('input').value || '').trim();
     if (!url) {
       return;
     }
-    btn.disabled = true;
-    await doMarketingStuff(url, btn).finally(() => {
-      btn.disabled = false;
+    btnReddit.disabled = true;
+    await doRedditStuff(url, btnReddit).finally(() => {
+      btnReddit.disabled = false;
+    });
+  });
+  const btnMedia = document.getElementById('go-btn-vid');
+  btnMedia.addEventListener('click', async function () {
+    const url = (document.getElementById('input').value || '').trim();
+    if (!url) {
+      return;
+    }
+    btnMedia.disabled = true;
+    await doMediaStuff(url, btnMedia).finally(() => {
+      btnMedia.disabled = false;
     });
   });
   if (token) {
@@ -365,6 +486,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById('inputs').classList.add('hidden');
     await getPreparedResults(url, token, entityId);
   }
+  if ("false" !== 'true') {
+    btnMedia.classList.add('hidden');
+  }
 });
 window.goToLink = async function (event, url) {
   console.log('goToLink', {
@@ -377,11 +501,12 @@ window.goToLink = async function (event, url) {
   if (url === 'Unlock') {
     event.preventDefault();
     document.getElementById('loading').classList.remove('hidden');
-    await window.createBuySession(window.globals.queriedUrl, window.globals.entityId);
+    await window.createBuySession(window.globalVars.queriedUrl, window.globalVars.redditEntityId);
   }
 };
+// expose to moustache
 window.createBuySession = _stripe.createBuySession;
-window.globals = globals;
+window.globalVars = _globalVars.globalVars;
 window.copyToClipboard = function copyToClipboard(element) {
   const text = element.innerText; //
   navigator.clipboard.writeText(text).then(() => {
@@ -397,4 +522,4 @@ window.showAnswer = function showAnswer(index, btn) {
   }
   btn.style.display = "none"; // Ukrywa przycisk
 };
-},{"./cfg":"mhI4","./utils":"FOZT","./stripe":"Uj2q"}]},{},["imtx"], null)
+},{"./cfg":"mhI4","./stripe":"Uj2q","./globalVars":"y5FJ","./reddit":"tUqo","./media":"hh4g"}]},{},["imtx"], null)

@@ -63,8 +63,19 @@
     });
 </script>
 <script id="media-template" type="text/x-handlebars-template">
-    Media template lol.
+    <div class="image-gallery">
+        {{#each allImageUrls}}
+            <div class="image-item">
+                <a href="{{this}}" target="_blank">  <!-- Link do dużego obrazu w nowej karcie -->
+                    <img src="{{this}}" alt="thumb" class="thumbnail">
+                </a>
+                <a href="{{this}}" download class="download-link" target="_blank">Download</a>  <!-- Link do pobrania -->
+            </div>
+        {{/each}}
+    </div>
 </script>
+
+<div id="image-output"></div>
 <script id="reddit-template" type="text/x-handlebars-template">
     <p><strong>URL:</strong> <a href="{{url}}" target="_blank">{{url}}</a></p>
     <section>
@@ -256,6 +267,7 @@
             <li>-Finds reddit posts&subreddits you can comment on pretending your app to be helpful</li>
             <li>-Generates boring non-advertise-looking content allowing you to save your dignity if you came up with one yourself.</li>
             <li>-Finds keywords/hashtags and functionalities of your super-cool app you can spam your videos and posts with</li>
+            <li>Generates promo videos and thumbnails</li>
             <li>-You can just blame AI if your startup didnt make any money</li>
             <li>-... and other shieeet</li>
             <!--<li>-<i>No credit card, no subscriptions, not even a clumsy account needed. Freemium - full access is 4.99$ bucks.</i> </li>-->

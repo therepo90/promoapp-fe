@@ -30,5 +30,5 @@ export async function poll(id, fn, count = 0) {
         window.location.reload();
     }
     await new Promise(resolve => setTimeout(resolve, 5000));
-    return poll(id, count + 1);
+    return poll(id, fn, count + 1);
 }
