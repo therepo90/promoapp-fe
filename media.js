@@ -1,14 +1,13 @@
-//polling fn to get promo based on status, use getReddit
 import {globalVars} from "./globalVars";
 import {apiUrl, shouldDelay} from "./cfg";
 import {checkResError} from "./utils";
 import {apiCall, poll} from "./api";
 
-export async function getReddit(id, token) {
+export async function getMedia(id, token) {
     const baseUrl = apiUrl;
-    console.log('getReddit...', {id, token});
+    console.log('getMedia...', {id, token});
     const tokenQuery = token ? `token=${token}` : '';
-    const res = await fetch(`${baseUrl}/api/reddit/${id}?${tokenQuery}`, {
+    const res = await fetch(`${baseUrl}/api/media/${id}?${tokenQuery}`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json'
@@ -19,20 +18,20 @@ export async function getReddit(id, token) {
     return data;
 }
 
-export async function callReddit(url) {
-    console.log('callReddit...');
+export async function callMedia(url) {
+    console.log('callMedia...');
 
-    const data = await apiCall(url, '/api/reddit');
+    const data = await apiCall(url, '/api/media');
     /*    const data = {
             id: 'e8431b98-3699-4db8-a531-5b8194e39f15'
         }*/
     console.log('apiCall done', {data});
-    globalVars.redditEntityId = data.id;
+    globalVars.mediaEntityId = data.id;
     if (shouldDelay) {
         await new Promise(resolve => setTimeout(resolve, 5000));
     }
-    const redditData = await poll(data.id, async () => getReddit(data.id));
+    const resData = await poll(data.id, async () => getMedia(data.id));
 
-    return redditData;
+    return resData;
 
 }

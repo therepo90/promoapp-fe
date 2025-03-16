@@ -4,6 +4,7 @@ import {defaultInput} from "./cfg";
 import {createBuySession} from "./stripe";
 import {globalVars} from "./globalVars";
 import {callReddit, getReddit} from "./reddit";
+import {callMedia} from "./media";
 
 
 export const  updateUI = async () => {
@@ -53,18 +54,50 @@ async function getPreparedResults(url, token, entityId) {
         document.getElementById('inputs').classList.remove('hidden');
         document.getElementById('input').value = globalVars.queriedUrl;
     });
+
+    // media? later maybe.
 }
 
-function proceedWithRedditStuff(redditData) {
+function proceedWithRedditStuff(data) {
     const dataContainer = document.getElementById('data-container');
-    const templateSource = document.getElementById('template').innerHTML;
+    const templateSource = document.getElementById('reddit-template').innerHTML;
     const template = window.Handlebars.compile(templateSource);
-    const html = template(redditData.json);
+    const html = template(data.json);
     dataContainer.innerHTML = html;
     document.getElementById('loading-succ').classList.remove('hidden');
 }
 
-async function doRedditStuff(url) {
+function proceedWithMediaStuff(data) {
+    const dataContainer = document.getElementById('data-container');
+    const templateSource = document.getElementById('media-template').innerHTML;
+    const template = window.Handlebars.compile(templateSource);
+    const html = template(data.json);
+    dataContainer.innerHTML = html;
+    document.getElementById('loading-succ').classList.remove('hidden');
+}
+
+export async function doMediaStuff(url) {
+    globalVars.queriedUrl = url;
+    document.getElementById('data-container').innerHTML = '';
+    document.getElementById('loading').classList.remove('hidden');
+
+    const name = funnyNames[Math.floor(Math.random() * funnyNames.length)];
+    document.getElementById('loading-text').innerText = `Hey my name is ${name} and I'll work for you today...gimme a sec`;
+
+    document.getElementById('loading-succ').classList.add('hidden');
+    // delay 1000 s
+    //await new Promise(resolve => setTimeout(resolve, 1000000));
+    await callMedia(url).then(redditData => {
+        console.log('callReddit done', {res: redditData});
+        proceedWithMediaStuff(redditData);
+    }).finally(() => {
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('inputs').classList.remove('hidden');
+        document.getElementById('input').value = globalVars.queriedUrl;
+    });
+}
+
+export async function doRedditStuff(url) {
     globalVars.queriedUrl = url;
     document.getElementById('data-container').innerHTML = '';
     document.getElementById('loading').classList.remove('hidden');
@@ -106,6 +139,18 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
     });
 
+    const btnMedia = document.getElementById('go-btn-vid');
+    btnMedia.addEventListener('click', async function () {
+        const url = (document.getElementById('input').value || '').trim();
+        if(!url){
+            return;
+        }
+        btnMedia.disabled = true;
+        await doMediaStuff(url, btnMedia).finally(() => {
+            btnMedia.disabled = false;
+        });
+    });
+
     if(token){
         const url = decodeURIComponent(urlParams.get('url'));
         const entityId = urlParams.get('entityId');
@@ -131,7 +176,7 @@ window.goToLink = async function (event, url) {
    if(url === 'Unlock'){
        event.preventDefault();
        document.getElementById('loading').classList.remove('hidden');
-       await window.createBuySession(window.globalVars.queriedUrl, window.globalVars.entityId);
+       await window.createBuySession(window.globalVars.queriedUrl, window.globalVars.redditEntityId);
    }
 };
 // expose to moustache
