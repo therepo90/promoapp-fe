@@ -15,12 +15,12 @@ export const  updateUI = async () => {
 
 }
 
-//polling fn to get promo based on status, use getPromo
+//polling fn to get promo based on status, use getReddit
 async function pollPromo(id, count =0) {
     if(count > 100) {
         throw new Error('Timeout');
     }
-    const promo = await getPromo(id);
+    const promo = await getReddit(id);
     if (promo.status === 'done') {
         return promo;
     }
@@ -32,11 +32,11 @@ async function pollPromo(id, count =0) {
     return pollPromo(id, count+1);
 }
 
-async function getPromo(id, token) {
+async function getReddit(id, token) {
     const baseUrl = apiUrl;
-    console.log('getPromo...', {id, token});
+    console.log('getReddit...', {id, token});
     const tokenQuery = token ? `token=${token}` : '';
-    const res =  await fetch(`${baseUrl}/api/promo-info/${id}?${tokenQuery}`, {
+    const res =  await fetch(`${baseUrl}/api/reddit/${id}?${tokenQuery}`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json'
@@ -47,9 +47,9 @@ async function getPromo(id, token) {
     return data;
 }
 
-async function runGetPromo(url) {
+async function runGetReddit(url) {
     const baseUrl = apiUrl;
-    const res =  await fetch(baseUrl + "/api/promo-info", {
+    const res =  await fetch(baseUrl + "/api/reddit", {
         method: "POST",
         body: JSON.stringify({url}),
 
@@ -62,10 +62,10 @@ async function runGetPromo(url) {
     return data;
 }
 
-export async function callPromo(url) {
-    console.log('callPromo...');
+export async function callReddit(url) {
+    console.log('callReddit...');
 
-    const data = await runGetPromo(url);
+    const data = await runGetReddit(url);
     /*    const data = {
             id: 'e8431b98-3699-4db8-a531-5b8194e39f15'
         }*/
@@ -113,8 +113,8 @@ async function getPreparedResults(url, token, entityId) {
     document.getElementById('loading-succ').classList.add('hidden');
     // delay 1000 s
     //await new Promise(resolve => setTimeout(resolve, 1000000));
-    await getPromo(entityId, token).then(redditData => {
-        console.log('callPromo done', {res: redditData});
+    await getReddit(entityId, token).then(redditData => {
+        console.log('callReddit done', {res: redditData});
         proceedWithRedditStuff(redditData);
         document.getElementById('loading-succ').classList.remove('hidden');
     }).finally(() => {
@@ -133,7 +133,7 @@ function proceedWithRedditStuff(redditData) {
     document.getElementById('loading-succ').classList.remove('hidden');
 }
 
-async function doMarketingStuff(url) {
+async function doRedditStuff(url) {
     globals.queriedUrl = url;
     document.getElementById('data-container').innerHTML = '';
     document.getElementById('loading').classList.remove('hidden');
@@ -144,8 +144,8 @@ async function doMarketingStuff(url) {
     document.getElementById('loading-succ').classList.add('hidden');
     // delay 1000 s
     //await new Promise(resolve => setTimeout(resolve, 1000000));
-    await callPromo(url).then(redditData => {
-        console.log('callPromo done', {res: redditData});
+    await callReddit(url).then(redditData => {
+        console.log('callReddit done', {res: redditData});
         proceedWithRedditStuff(redditData);
     }).finally(() => {
         document.getElementById('loading').classList.add('hidden');
@@ -156,7 +156,6 @@ async function doMarketingStuff(url) {
 
 document.addEventListener("DOMContentLoaded", async function () {
     console.log('DOMContentLoaded init...');
-    const btn = document.getElementById('go-btn');
 
     // check for url query param token and save to session storage and remove from url
     const urlParams = new URLSearchParams(window.location.search);
@@ -164,14 +163,15 @@ document.addEventListener("DOMContentLoaded", async function () {
     const token = urlParams.get('token');
 
     document.getElementById('input').value = defaultInput;
-    btn.addEventListener('click', async function () {
+    const btnReddit = document.getElementById('go-btn-reddit');
+    btnReddit.addEventListener('click', async function () {
         const url = (document.getElementById('input').value || '').trim();
         if(!url){
             return;
         }
-        btn.disabled = true;
-        await doMarketingStuff(url, btn).finally(() => {
-            btn.disabled = false;
+        btnReddit.disabled = true;
+        await doRedditStuff(url, btnReddit).finally(() => {
+            btnReddit.disabled = false;
         });
     });
 
