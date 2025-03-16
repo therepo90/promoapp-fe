@@ -1,84 +1,15 @@
 //const host = 'http://localhost:3000';
 
-import {apiUrl, defaultInput, shouldDelay} from "./cfg";
-import {checkResError} from "./utils";
+import {defaultInput} from "./cfg";
 import {createBuySession} from "./stripe";
-
-var globals = {
-    paymentUrl: undefined,
-    queriedUrl: undefined,
-    entityId: undefined
-};
+import {globalVars} from "./globalVars";
+import {callReddit, getReddit} from "./reddit";
 
 
 export const  updateUI = async () => {
 
 }
 
-//polling fn to get promo based on status, use getReddit
-async function pollPromo(id, count =0) {
-    if(count > 100) {
-        throw new Error('Timeout');
-    }
-    const promo = await getReddit(id);
-    if (promo.status === 'done') {
-        return promo;
-    }
-    if (promo.status === 'error') {
-        alert('Woopsies. Error. It sometimes happens. Lets try again.');
-        window.location.reload();
-    }
-    await new Promise(resolve => setTimeout(resolve, 5000));
-    return pollPromo(id, count+1);
-}
-
-async function getReddit(id, token) {
-    const baseUrl = apiUrl;
-    console.log('getReddit...', {id, token});
-    const tokenQuery = token ? `token=${token}` : '';
-    const res =  await fetch(`${baseUrl}/api/reddit/${id}?${tokenQuery}`, {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-    await checkResError(res);
-    const data = await res.json();
-    return data;
-}
-
-async function runGetReddit(url) {
-    const baseUrl = apiUrl;
-    const res =  await fetch(baseUrl + "/api/reddit", {
-        method: "POST",
-        body: JSON.stringify({url}),
-
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-    await checkResError(res);
-    const data = await res.json();
-    return data;
-}
-
-export async function callReddit(url) {
-    console.log('callReddit...');
-
-    const data = await runGetReddit(url);
-    /*    const data = {
-            id: 'e8431b98-3699-4db8-a531-5b8194e39f15'
-        }*/
-    console.log('runGetPromo done', {data});
-    globals.entityId = data.id;
-    if(shouldDelay) {
-        await new Promise(resolve => setTimeout(resolve, 5000));
-    }
-    const redditData = await pollPromo(data.id);
-
-    return redditData;
-
-}
 const funnyNames = [
     "Bob McMuffin",
     "Chad Thundercock",
@@ -103,7 +34,7 @@ const funnyNames = [
 ];
 
 async function getPreparedResults(url, token, entityId) {
-    globals.queriedUrl = url;
+    globalVars.queriedUrl = url;
     document.getElementById('data-container').innerHTML = '';
     document.getElementById('loading').classList.remove('hidden');
 
@@ -120,7 +51,7 @@ async function getPreparedResults(url, token, entityId) {
     }).finally(() => {
         document.getElementById('loading').classList.add('hidden');
         document.getElementById('inputs').classList.remove('hidden');
-        document.getElementById('input').value = globals.queriedUrl;
+        document.getElementById('input').value = globalVars.queriedUrl;
     });
 }
 
@@ -134,7 +65,7 @@ function proceedWithRedditStuff(redditData) {
 }
 
 async function doRedditStuff(url) {
-    globals.queriedUrl = url;
+    globalVars.queriedUrl = url;
     document.getElementById('data-container').innerHTML = '';
     document.getElementById('loading').classList.remove('hidden');
 
@@ -150,7 +81,7 @@ async function doRedditStuff(url) {
     }).finally(() => {
         document.getElementById('loading').classList.add('hidden');
         document.getElementById('inputs').classList.remove('hidden');
-        document.getElementById('input').value = globals.queriedUrl;
+        document.getElementById('input').value = globalVars.queriedUrl;
     });
 }
 
@@ -200,11 +131,12 @@ window.goToLink = async function (event, url) {
    if(url === 'Unlock'){
        event.preventDefault();
        document.getElementById('loading').classList.remove('hidden');
-       await window.createBuySession(window.globals.queriedUrl, window.globals.entityId);
+       await window.createBuySession(window.globalVars.queriedUrl, window.globalVars.entityId);
    }
 };
+// expose to moustache
 window.createBuySession = createBuySession;
-window.globals = globals;
+window.globalVars = globalVars;
 
 window.copyToClipboard = function copyToClipboard(element) {
     const text = element.innerText;//
