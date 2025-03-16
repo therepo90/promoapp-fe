@@ -185,7 +185,7 @@ body {
   flex-direction: column;
 }
 .hidden {
-  display: none;
+  display: none !important;
 }
 rg-wgl-loader {
   display: block;
