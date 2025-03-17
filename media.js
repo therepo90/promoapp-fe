@@ -21,7 +21,7 @@ export async function getMedia(id, token) {
 export async function callMedia(url) {
     console.log('callMedia...');
 
-    const data = await apiCall(url, '/api/media');
+    const data = await apiCall({ url }, '/api/media');
     /*    const data = {
             id: 'e8431b98-3699-4db8-a531-5b8194e39f15'
         }*/

@@ -2,11 +2,11 @@
 import {apiUrl} from "./cfg";
 import {checkResError} from "./utils";
 
-export async function apiCall(url, path) {
+export async function apiCall(body, path) {
     const baseUrl = apiUrl;
     const res = await fetch(`${baseUrl}${path}`, {
         method: "POST",
-        body: JSON.stringify({url}),
+        body: JSON.stringify(body),
 
         headers: {
             'Content-Type': 'application/json'

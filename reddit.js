@@ -22,7 +22,7 @@ export async function getReddit(id, token) {
 export async function callReddit(url) {
     console.log('callReddit...');
 
-    const data = await apiCall(url, '/api/reddit');
+    const data = await apiCall({ url }, '/api/reddit');
     /*    const data = {
             id: 'e8431b98-3699-4db8-a531-5b8194e39f15'
         }*/

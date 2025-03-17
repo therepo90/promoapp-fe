@@ -101,8 +101,10 @@ function proceedWithMediaStuff(data) {
         }
         btn.disabled = true;
 
-        const mainImg = data.json.pageResources.mainImgResourceId;
-        const thumbImg = data.json.generatedImages.imageIds[0];
+        //const mainImg = data.json.pageResources.mainImgResourceId;
+        //const thumbImg = data.json.generatedImages.imageIds[0];
+        const mainImg = apiUrl + data.json.pageResources.mainImgServingUrl;
+        const thumbImg = apiUrl + data.json.generatedImages.servingUrls[0];
 
         await generateVideo({
             mainImg,
