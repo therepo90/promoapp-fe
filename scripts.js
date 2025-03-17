@@ -69,7 +69,18 @@ function proceedWithRedditStuff(data) {
 }
 
 function proceedWithVideoStuff(data) {
-
+    const dataContainer = document.getElementById('data-container');
+    const templateSource = document.getElementById('video-template').innerHTML;
+    const template = window.Handlebars.compile(templateSource);
+    // map apiUrl
+    const parsed = {
+        ...data.json,
+        videoUrl: data.json.videoUrl
+    };
+    console.log({parsed});
+    const html = template(parsed);
+    dataContainer.innerHTML = html;
+    document.getElementById('loading-succ').classList.remove('hidden');
 }
 function proceedWithMediaStuff(data) {
     const dataContainer = document.getElementById('data-container');

@@ -138,7 +138,7 @@ export const auth0Cfg = {
     }
 }*/
 const shouldDelay = exports.shouldDelay = dell;
-const defaultInput = exports.defaultInput = "false" === 'true' ? 'https://translatesubtitles.org/' : 'https://promo.idontknowhatimdoing.com/';
+const defaultInput = exports.defaultInput = "false" === 'true' ? 'https://teidepermit.eu/' : 'https://promo.idontknowhatimdoing.com/';
 //export const defaultInput = 'https://promo.idontknowhatimdoing.com/'; // process.env.LOCAL_DEV === 'true' ? 'https://translatesubtitles.org' : '';
 },{}],"Uj2q":[function(require,module,exports) {
 "use strict";
@@ -448,7 +448,22 @@ function proceedWithRedditStuff(data) {
   dataContainer.innerHTML = html;
   document.getElementById('loading-succ').classList.remove('hidden');
 }
-function proceedWithVideoStuff(data) {}
+function proceedWithVideoStuff(data) {
+  const dataContainer = document.getElementById('data-container');
+  const templateSource = document.getElementById('video-template').innerHTML;
+  const template = window.Handlebars.compile(templateSource);
+  // map apiUrl
+  const parsed = {
+    ...data.json,
+    videoUrl: data.json.videoUrl
+  };
+  console.log({
+    parsed
+  });
+  const html = template(parsed);
+  dataContainer.innerHTML = html;
+  document.getElementById('loading-succ').classList.remove('hidden');
+}
 function proceedWithMediaStuff(data) {
   const dataContainer = document.getElementById('data-container');
   const templateSource = document.getElementById('media-template').innerHTML;

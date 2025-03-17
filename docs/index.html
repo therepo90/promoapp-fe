@@ -33,7 +33,7 @@
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     <link rel="stylesheet" href="styles.b1fa0808.css">
     <script src="rg-web-component.c82a82e9.77b88d9d.js" defer=""></script>
-    <script src="scripts.3ee1c4a8.js" defer=""></script>
+    <script src="scripts.b60c87a2.js" defer=""></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -58,6 +58,22 @@ Handlebars.registerHelper('fNum', function formatNumber(number) {
   }
   return number.toString();
 });</script>
+<!--video template-->
+<script id="video-template" type="text/x-handlebars-template">
+    <h3>Video</h3>
+    <div id="video-container">
+        {{#if videoUrl}}
+            <video id="my-video" width="640" height="360" controls>
+                <source src="{{videoUrl}}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <a href="{{videoUrl}}" download class="download-link" target="_blank">Download Video</a>
+        {{else}}
+            <p>No video available.</p>
+        {{/if}}
+    </div>
+</script>
+
 <script id="media-template" type="text/x-handlebars-template">
     <h3>Main page</h3>
     <div class="image-item">
