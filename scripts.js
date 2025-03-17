@@ -5,6 +5,7 @@ import {createBuySession} from "./stripe";
 import {globalVars} from "./globalVars";
 import {callReddit, getReddit} from "./reddit";
 import {callMedia} from "./media";
+import {callVideo} from "./video";
 
 
 export const  updateUI = async () => {
@@ -67,6 +68,9 @@ function proceedWithRedditStuff(data) {
     document.getElementById('loading-succ').classList.remove('hidden');
 }
 
+function proceedWithVideoStuff(data) {
+
+}
 function proceedWithMediaStuff(data) {
     const dataContainer = document.getElementById('data-container');
     const templateSource = document.getElementById('media-template').innerHTML;
@@ -87,8 +91,56 @@ function proceedWithMediaStuff(data) {
     });
     dataContainer.innerHTML = html;
     document.getElementById('loading-succ').classList.remove('hidden');
-}
 
+     //gen-vid-btn
+    const btn = document.getElementById('gen-vid-btn');
+    btn.addEventListener('click', async function () {
+        const url = (document.getElementById('input').value || '').trim();
+        if (!url) {
+            return;
+        }
+        btn.disabled = true;
+
+        const mainImg = data.json.pageResources.mainImgResourceId;
+        const thumbImg = data.json.generatedImages.imageIds[0];
+
+        await generateVideo({
+            mainImg,
+            featuresImgs: [],
+            thumbImg,
+            url
+        }).finally(() => {
+            btn.disabled = false;
+        });
+    });
+}
+export async function generateVideo({url, mainImg, featuresImgs, thumbImg}) {
+    console.log('generateVideo', {mainImg, featuresImgs, thumbImg});
+
+    document.getElementById('data-container').innerHTML = '';
+    document.getElementById('loading').classList.remove('hidden');
+
+    const name = funnyNames[Math.floor(Math.random() * funnyNames.length)];
+    document.getElementById('loading-text').innerText = `Hey my name is ${name} and I'll work for you today...gimme a sec`;
+
+    document.getElementById('loading-succ').classList.add('hidden');
+    // delay 1000 s
+    //await new Promise(resolve => setTimeout(resolve, 1000000));
+    await callVideo({
+        url,
+        mainImg,
+        featuresImgs,
+        thumbImg
+    }).then(data => {
+        console.log('callVideo done', {res: data});
+        proceedWithVideoStuff(data);
+    }).finally(() => {
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('inputs').classList.remove('hidden');
+        document.getElementById('input').value = globalVars.queriedUrl;
+    });
+
+}
 export async function doMediaStuff(url) {
     globalVars.queriedUrl = url;
     document.getElementById('data-container').innerHTML = '';
@@ -100,9 +152,9 @@ export async function doMediaStuff(url) {
     document.getElementById('loading-succ').classList.add('hidden');
     // delay 1000 s
     //await new Promise(resolve => setTimeout(resolve, 1000000));
-    await callMedia(url).then(redditData => {
-        console.log('callReddit done', {res: redditData});
-        proceedWithMediaStuff(redditData);
+    await callMedia(url).then(data => {
+        console.log('callMedia done', {res: data});
+        proceedWithMediaStuff(data);
     }).finally(() => {
         document.getElementById('loading').classList.add('hidden');
         document.getElementById('inputs').classList.remove('hidden');
