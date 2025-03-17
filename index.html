@@ -63,8 +63,16 @@
     });
 </script>
 <script id="media-template" type="text/x-handlebars-template">
+    <h3>Main page</h3>
+    <div class="image-item">
+        <a href="{{pageResources.mainImgServingUrl}}" target="_blank">  <!-- Link do dużego obrazu w nowej karcie -->
+            <img src="{{pageResources.mainImgServingUrl}}" alt="thumb" class="thumbnail">
+        </a>
+        <a href="{{pageResources.mainImgServingUrl}}" download class="download-link" target="_blank">Download</a>  <!-- Link do pobrania -->
+    </div>
+    <h3>Thumbnails</h3>
     <div class="image-gallery">
-        {{#each servingUrls}}
+        {{#each generatedImages.servingUrls}}
             <div class="image-item">
                 <a href="{{this}}" target="_blank">  <!-- Link do dużego obrazu w nowej karcie -->
                     <img src="{{this}}" alt="thumb" class="thumbnail">

@@ -406,7 +406,14 @@ function proceedWithMediaStuff(data) {
   console.log({
     parsedImages
   });
-  const html = template(parsedImages);
+  const html = template({
+    ...data.json,
+    pageResources: {
+      ...data.json.pageResources,
+      mainImgServingUrl: _cfg.apiUrl + data.json.pageResources.mainImgServingUrl
+    },
+    generatedImages: parsedImages
+  });
   dataContainer.innerHTML = html;
   document.getElementById('loading-succ').classList.remove('hidden');
 }

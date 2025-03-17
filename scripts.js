@@ -77,7 +77,14 @@ function proceedWithMediaStuff(data) {
             servingUrls: data.json.generatedImages.servingUrls.map(url => apiUrl + url)
     };
     console.log({parsedImages});
-    const html = template(parsedImages);
+    const html = template({
+        ...data.json,
+        pageResources: {
+            ...data.json.pageResources,
+            mainImgServingUrl: apiUrl + data.json.pageResources.mainImgServingUrl
+        },
+        generatedImages: parsedImages
+    });
     dataContainer.innerHTML = html;
     document.getElementById('loading-succ').classList.remove('hidden');
 }

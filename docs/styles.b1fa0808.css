@@ -3983,6 +3983,9 @@ section {
 .download-link:hover {
   background-color: #3e8e41;
 }
+.loading-success {
+  margin-top: 12px;
+}
 html {
   scroll-behavior: smooth;
 }
