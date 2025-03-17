@@ -455,7 +455,7 @@ function proceedWithVideoStuff(data) {
   // map apiUrl
   const parsed = {
     ...data.json,
-    videoUrl: data.json.videoUrl
+    videoUrl: _cfg.apiUrl + data.json.videoServingUrl
   };
   console.log({
     parsed

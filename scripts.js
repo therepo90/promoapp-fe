@@ -75,7 +75,7 @@ function proceedWithVideoStuff(data) {
     // map apiUrl
     const parsed = {
         ...data.json,
-        videoUrl: data.json.videoUrl
+        videoUrl: apiUrl + data.json.videoServingUrl
     };
     console.log({parsed});
     const html = template(parsed);
