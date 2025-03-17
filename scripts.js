@@ -1,6 +1,6 @@
 //const host = 'http://localhost:3000';
 
-import {defaultInput} from "./cfg";
+import {apiUrl, defaultInput} from "./cfg";
 import {createBuySession} from "./stripe";
 import {globalVars} from "./globalVars";
 import {callReddit, getReddit} from "./reddit";
@@ -71,7 +71,13 @@ function proceedWithMediaStuff(data) {
     const dataContainer = document.getElementById('data-container');
     const templateSource = document.getElementById('media-template').innerHTML;
     const template = window.Handlebars.compile(templateSource);
-    const html = template(data.json.generatedImages);
+    // map apiUrl
+    const parsedImages = {
+        ...data.json.generatedImages,
+            servingUrls: data.json.generatedImages.servingUrls.map(url => apiUrl + url)
+    };
+    console.log({parsedImages});
+    const html = template(parsedImages);
     dataContainer.innerHTML = html;
     document.getElementById('loading-succ').classList.remove('hidden');
 }

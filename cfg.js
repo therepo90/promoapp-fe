@@ -12,5 +12,5 @@ export const auth0Cfg = {
     }
 }*/
 export const shouldDelay = dell;
-export const defaultInput = process.env.LOCAL_DEV === 'true' ? 'https://teidepermit.eu/' : 'https://promo.idontknowhatimdoing.com/';
+export const defaultInput = process.env.LOCAL_DEV === 'true' ? 'https://translatesubtitles.org/' : 'https://promo.idontknowhatimdoing.com/';
 //export const defaultInput = 'https://promo.idontknowhatimdoing.com/'; // process.env.LOCAL_DEV === 'true' ? 'https://translatesubtitles.org' : '';
