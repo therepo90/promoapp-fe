@@ -138,7 +138,7 @@ export const auth0Cfg = {
     }
 }*/
 const shouldDelay = exports.shouldDelay = dell;
-const defaultInput = exports.defaultInput = "false" === 'true' ? 'https://teidepermit.eu/' : 'https://promo.idontknowhatimdoing.com/';
+const defaultInput = exports.defaultInput = "false" === 'true' ? 'https://translatesubtitles.org/' : 'https://promo.idontknowhatimdoing.com/';
 //export const defaultInput = 'https://promo.idontknowhatimdoing.com/'; // process.env.LOCAL_DEV === 'true' ? 'https://translatesubtitles.org' : '';
 },{}],"Uj2q":[function(require,module,exports) {
 "use strict";
@@ -398,7 +398,15 @@ function proceedWithMediaStuff(data) {
   const dataContainer = document.getElementById('data-container');
   const templateSource = document.getElementById('media-template').innerHTML;
   const template = window.Handlebars.compile(templateSource);
-  const html = template(data.json.generatedImages);
+  // map apiUrl
+  const parsedImages = {
+    ...data.json.generatedImages,
+    servingUrls: data.json.generatedImages.servingUrls.map(url => _cfg.apiUrl + url)
+  };
+  console.log({
+    parsedImages
+  });
+  const html = template(parsedImages);
   dataContainer.innerHTML = html;
   document.getElementById('loading-succ').classList.remove('hidden');
 }
