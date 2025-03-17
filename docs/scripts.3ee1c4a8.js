@@ -222,13 +222,11 @@ var _cfg = require("./cfg");
 var _utils = require("./utils");
 // /api/reddit
 
-async function apiCall(url, path) {
+async function apiCall(body, path) {
   const baseUrl = _cfg.apiUrl;
   const res = await fetch(`${baseUrl}${path}`, {
     method: "POST",
-    body: JSON.stringify({
-      url
-    }),
+    body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json'
     }
@@ -285,7 +283,9 @@ async function getReddit(id, token) {
 }
 async function callReddit(url) {
   console.log('callReddit...');
-  const data = await (0, _api.apiCall)(url, '/api/reddit');
+  const data = await (0, _api.apiCall)({
+    url
+  }, '/api/reddit');
   /*    const data = {
           id: 'e8431b98-3699-4db8-a531-5b8194e39f15'
       }*/
@@ -330,7 +330,9 @@ async function getMedia(id, token) {
 }
 async function callMedia(url) {
   console.log('callMedia...');
-  const data = await (0, _api.apiCall)(url, '/api/media');
+  const data = await (0, _api.apiCall)({
+    url
+  }, '/api/media');
   /*    const data = {
           id: 'e8431b98-3699-4db8-a531-5b8194e39f15'
       }*/
@@ -344,7 +346,57 @@ async function callMedia(url) {
   const resData = await (0, _api.poll)(data.id, async () => getMedia(data.id));
   return resData;
 }
-},{"./globalVars":"y5FJ","./cfg":"mhI4","./utils":"FOZT","./api":"LVu9"}],"imtx":[function(require,module,exports) {
+},{"./globalVars":"y5FJ","./cfg":"mhI4","./utils":"FOZT","./api":"LVu9"}],"H527":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.callVideo = callVideo;
+exports.getVideo = getVideo;
+var _cfg = require("./cfg");
+var _utils = require("./utils");
+var _api = require("./api");
+async function getVideo(id, token) {
+  const baseUrl = _cfg.apiUrl;
+  console.log('getVideo...', {
+    id,
+    token
+  });
+  const tokenQuery = token ? `token=${token}` : '';
+  const res = await fetch(`${baseUrl}/api/video/${id}?${tokenQuery}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  await (0, _utils.checkResError)(res);
+  const data = await res.json();
+  return data;
+}
+async function callVideo({
+  url,
+  mainImg,
+  featuresImgs,
+  thumbImg
+}) {
+  console.log('callVideo...');
+  const data = await (0, _api.apiCall)({
+    url,
+    mainImg,
+    featuresImgs,
+    thumbImg
+  }, '/api/video');
+  console.log('apiCall done', {
+    data
+  });
+  if (_cfg.shouldDelay) {
+    await new Promise(resolve => setTimeout(resolve, 5000));
+  }
+  const resData = await (0, _api.poll)(data.id, async () => getVideo(data.id));
+  return resData;
+}
+},{"./cfg":"mhI4","./utils":"FOZT","./api":"LVu9"}],"imtx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -352,12 +404,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.doMediaStuff = doMediaStuff;
 exports.doRedditStuff = doRedditStuff;
+exports.generateVideo = generateVideo;
 exports.updateUI = void 0;
 var _cfg = require("./cfg");
 var _stripe = require("./stripe");
 var _globalVars = require("./globalVars");
 var _reddit = require("./reddit");
 var _media = require("./media");
+var _video = require("./video");
 //const host = 'http://localhost:3000';
 
 const updateUI = async () => {};
@@ -394,6 +448,7 @@ function proceedWithRedditStuff(data) {
   dataContainer.innerHTML = html;
   document.getElementById('loading-succ').classList.remove('hidden');
 }
+function proceedWithVideoStuff(data) {}
 function proceedWithMediaStuff(data) {
   const dataContainer = document.getElementById('data-container');
   const templateSource = document.getElementById('media-template').innerHTML;
@@ -416,6 +471,63 @@ function proceedWithMediaStuff(data) {
   });
   dataContainer.innerHTML = html;
   document.getElementById('loading-succ').classList.remove('hidden');
+
+  //gen-vid-btn
+  const btn = document.getElementById('gen-vid-btn');
+  btn.addEventListener('click', async function () {
+    const url = (document.getElementById('input').value || '').trim();
+    if (!url) {
+      return;
+    }
+    btn.disabled = true;
+
+    //const mainImg = data.json.pageResources.mainImgResourceId;
+    //const thumbImg = data.json.generatedImages.imageIds[0];
+    const mainImg = _cfg.apiUrl + data.json.pageResources.mainImgServingUrl;
+    const thumbImg = _cfg.apiUrl + data.json.generatedImages.servingUrls[0];
+    await generateVideo({
+      mainImg,
+      featuresImgs: [],
+      thumbImg,
+      url
+    }).finally(() => {
+      btn.disabled = false;
+    });
+  });
+}
+async function generateVideo({
+  url,
+  mainImg,
+  featuresImgs,
+  thumbImg
+}) {
+  console.log('generateVideo', {
+    mainImg,
+    featuresImgs,
+    thumbImg
+  });
+  document.getElementById('data-container').innerHTML = '';
+  document.getElementById('loading').classList.remove('hidden');
+  const name = funnyNames[Math.floor(Math.random() * funnyNames.length)];
+  document.getElementById('loading-text').innerText = `Hey my name is ${name} and I'll work for you today...gimme a sec`;
+  document.getElementById('loading-succ').classList.add('hidden');
+  // delay 1000 s
+  //await new Promise(resolve => setTimeout(resolve, 1000000));
+  await (0, _video.callVideo)({
+    url,
+    mainImg,
+    featuresImgs,
+    thumbImg
+  }).then(data => {
+    console.log('callVideo done', {
+      res: data
+    });
+    proceedWithVideoStuff(data);
+  }).finally(() => {
+    document.getElementById('loading').classList.add('hidden');
+    document.getElementById('inputs').classList.remove('hidden');
+    document.getElementById('input').value = _globalVars.globalVars.queriedUrl;
+  });
 }
 async function doMediaStuff(url) {
   _globalVars.globalVars.queriedUrl = url;
@@ -426,11 +538,11 @@ async function doMediaStuff(url) {
   document.getElementById('loading-succ').classList.add('hidden');
   // delay 1000 s
   //await new Promise(resolve => setTimeout(resolve, 1000000));
-  await (0, _media.callMedia)(url).then(redditData => {
-    console.log('callReddit done', {
-      res: redditData
+  await (0, _media.callMedia)(url).then(data => {
+    console.log('callMedia done', {
+      res: data
     });
-    proceedWithMediaStuff(redditData);
+    proceedWithMediaStuff(data);
   }).finally(() => {
     document.getElementById('loading').classList.add('hidden');
     document.getElementById('inputs').classList.remove('hidden');
@@ -537,4 +649,4 @@ window.showAnswer = function showAnswer(index, btn) {
   }
   btn.style.display = "none"; // Ukrywa przycisk
 };
-},{"./cfg":"mhI4","./stripe":"Uj2q","./globalVars":"y5FJ","./reddit":"tUqo","./media":"hh4g"}]},{},["imtx"], null)
+},{"./cfg":"mhI4","./stripe":"Uj2q","./globalVars":"y5FJ","./reddit":"tUqo","./media":"hh4g","./video":"H527"}]},{},["imtx"], null)
