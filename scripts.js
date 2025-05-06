@@ -6,6 +6,7 @@ import {globalVars} from "./globalVars";
 import {callReddit, getReddit} from "./reddit";
 import {callMedia} from "./media";
 import {callVideo} from "./video";
+import {initUpload, initUploadForm} from "./upload";
 
 
 export const  updateUI = async () => {
@@ -82,6 +83,29 @@ function proceedWithVideoStuff(data) {
     dataContainer.innerHTML = html;
     document.getElementById('loading-succ').classList.remove('hidden');
 }
+
+async function onGenerateVideoClick(btn, data) {
+  const url = (document.getElementById('input').value || '').trim();
+  if (!url) {
+    return;
+  }
+  btn.disabled = true;
+
+  //const mainImg = data.json.pageResources.mainImgResourceId;
+  //const thumbImg = data.json.generatedImages.imageIds[0];
+  const mainImg = apiUrl + data.json.pageResources.mainImgServingUrl;
+  const thumbImg = apiUrl + globalVars.vid.entering.servingUrl; //data.json.generatedImages.servingUrls[0];
+
+  await generateVideo({
+    mainImg,
+    featuresImgs: [],
+    thumbImg,
+    url,
+  }).finally(() => {
+    btn.disabled = false;
+  });
+}
+
 function proceedWithMediaStuff(data) {
     const dataContainer = document.getElementById('data-container');
     const templateSource = document.getElementById('media-template').innerHTML;
@@ -103,28 +127,14 @@ function proceedWithMediaStuff(data) {
     dataContainer.innerHTML = html;
     document.getElementById('loading-succ').classList.remove('hidden');
 
+    document.getElementById('image-item-0').classList.add('selected');
      //gen-vid-btn
     const btn = document.getElementById('gen-vid-btn');
+
+    initUpload('upload-form1');
+    initUpload('upload-form2');
     btn.addEventListener('click', async function () {
-        const url = (document.getElementById('input').value || '').trim();
-        if (!url) {
-            return;
-        }
-        btn.disabled = true;
-
-        //const mainImg = data.json.pageResources.mainImgResourceId;
-        //const thumbImg = data.json.generatedImages.imageIds[0];
-        const mainImg = apiUrl + data.json.pageResources.mainImgServingUrl;
-        const thumbImg = apiUrl + data.json.generatedImages.servingUrls[0];
-
-        await generateVideo({
-            mainImg,
-            featuresImgs: [],
-            thumbImg,
-            url
-        }).finally(() => {
-            btn.disabled = false;
-        });
+      await onGenerateVideoClick(btn, data);
     });
 }
 export async function generateVideo({url, mainImg, featuresImgs, thumbImg}) {
@@ -196,57 +206,60 @@ export async function doRedditStuff(url) {
     });
 }
 
+async function initApp() {
+  console.log('DOMContentLoaded init...');
+
+  // check for url query param token and save to session storage and remove from url
+  const urlParams = new URLSearchParams(window.location.search);
+  // paymentSuccess
+  const token = urlParams.get('token');
+
+  document.getElementById('input').value = defaultInput;
+  const btnReddit = document.getElementById('go-btn-reddit');
+  btnReddit.addEventListener('click', async function () {
+    const url = (document.getElementById('input').value || '').trim();
+    if (!url) {
+      return;
+    }
+    btnReddit.disabled = true;
+    await doRedditStuff(url, btnReddit).finally(() => {
+      btnReddit.disabled = false;
+    });
+  });
+
+  const btnMedia = document.getElementById('go-btn-vid');
+  btnMedia.addEventListener('click', async function () {
+    const url = (document.getElementById('input').value || '').trim();
+    if (!url) {
+      return;
+    }
+    btnMedia.disabled = true;
+    await doMediaStuff(url, btnMedia).finally(() => {
+      btnMedia.disabled = false;
+    });
+  });
+
+  if (token) {
+    const url = decodeURIComponent(urlParams.get('url'));
+    const entityId = urlParams.get('entityId');
+    console.log('token, url', { url, token });
+    sessionStorage.setItem('token', token);
+    sessionStorage.setItem('url', url);
+    sessionStorage.setItem('entityId', entityId);
+
+    window.history.replaceState({}, document.title, window.location.pathname);
+    document.getElementById('inputs').classList.add('hidden');
+
+    await getPreparedResults(url, token, entityId);
+  }
+
+  if (process.env.LOCAL_DEV !== 'true') {
+    btnMedia.classList.add('hidden');
+  }
+}
+
 document.addEventListener("DOMContentLoaded", async function () {
-    console.log('DOMContentLoaded init...');
-
-    // check for url query param token and save to session storage and remove from url
-    const urlParams = new URLSearchParams(window.location.search);
-    // paymentSuccess
-    const token = urlParams.get('token');
-
-    document.getElementById('input').value = defaultInput;
-    const btnReddit = document.getElementById('go-btn-reddit');
-    btnReddit.addEventListener('click', async function () {
-        const url = (document.getElementById('input').value || '').trim();
-        if(!url){
-            return;
-        }
-        btnReddit.disabled = true;
-        await doRedditStuff(url, btnReddit).finally(() => {
-            btnReddit.disabled = false;
-        });
-    });
-
-    const btnMedia = document.getElementById('go-btn-vid');
-    btnMedia.addEventListener('click', async function () {
-        const url = (document.getElementById('input').value || '').trim();
-        if(!url){
-            return;
-        }
-        btnMedia.disabled = true;
-        await doMediaStuff(url, btnMedia).finally(() => {
-            btnMedia.disabled = false;
-        });
-    });
-
-    if(token){
-        const url = decodeURIComponent(urlParams.get('url'));
-        const entityId = urlParams.get('entityId');
-        console.log('token, url', {url, token});
-        sessionStorage.setItem('token', token);
-        sessionStorage.setItem('url', url);
-        sessionStorage.setItem('entityId', entityId);
-
-        window.history.replaceState({}, document.title, window.location.pathname);
-        document.getElementById('inputs').classList.add('hidden');
-
-        await getPreparedResults(url, token, entityId);
-    }
-
-    if(process.env.LOCAL_DEV!=='true'){
-        btnMedia.classList.add('hidden');
-    }
-
+  await initApp();
 });
 
 window.goToLink = async function (event, url) {
@@ -274,6 +287,23 @@ window.copyToClipboard = function copyToClipboard(element) {
     });
 }
 
+window.selectEntering =  function selectEntering(e,index, url) {
+    console.log(arguments);
+    e.preventDefault();
+    globalVars.vid = globalVars.vid || {};
+    globalVars.vid.entering = {
+        servingUrl: url,
+        index
+    };
+    // uncheck class selected to all .image-item
+    const items = document.querySelectorAll('.thumbs .image-item');
+    items.forEach(item => {
+        item.classList.remove('selected');
+    });
+    // check class selected to this item
+    const selectedItem = document.querySelector(`#image-item-${index}`);
+    selectedItem.classList.add('selected');
+};
 window.showAnswer =  function showAnswer(index, btn) {
     const answerElement = document.getElementById(`answer-${index}`);
     if (answerElement) {
