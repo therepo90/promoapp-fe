@@ -1,7 +1,7 @@
 //const host = 'http://localhost:3000';
 
 import {apiUrl, defaultInput} from "./cfg";
-import {createBuySession} from "../stripe";
+import {createBuySession} from "./stripe";
 import {appState} from "./appState";
 import {callReddit, getReddit} from "./reddit";
 import {callMedia} from "./media";
