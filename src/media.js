@@ -1,4 +1,4 @@
-import {globalVars} from "./globalVars";
+import {appState} from "./appState";
 import {apiUrl, shouldDelay} from "./cfg";
 import {checkResError} from "./utils";
 import {apiCall, poll} from "./api";
@@ -26,7 +26,7 @@ export async function callMedia(url) {
             id: 'e8431b98-3699-4db8-a531-5b8194e39f15'
         }*/
     console.log('apiCall done', {data});
-    globalVars.mediaEntityId = data.id;
+    appState.mediaEntityId = data.id;
     if (shouldDelay) {
         await new Promise(resolve => setTimeout(resolve, 5000));
     }

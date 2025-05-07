@@ -1,4 +1,4 @@
-import {apiUrl} from "./cfg";
+import {apiUrl} from "./src/cfg";
 
 export const createBuySession = async (url, entityId) => {
     console.log('buy');

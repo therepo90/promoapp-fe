@@ -1,8 +1,8 @@
 //const host = 'http://localhost:3000';
 
 import {apiUrl, defaultInput} from "./cfg";
-import {createBuySession} from "./stripe";
-import {globalVars} from "./globalVars";
+import {createBuySession} from "../stripe";
+import {appState} from "./appState";
 import {callReddit, getReddit} from "./reddit";
 import {callMedia} from "./media";
 import {callVideo} from "./video";
@@ -37,7 +37,7 @@ const funnyNames = [
 ];
 
 async function getPreparedResults(url, token, entityId) {
-    globalVars.queriedUrl = url;
+    appState.queriedUrl = url;
     document.getElementById('data-container').innerHTML = '';
     document.getElementById('loading').classList.remove('hidden');
 
@@ -54,7 +54,7 @@ async function getPreparedResults(url, token, entityId) {
     }).finally(() => {
         document.getElementById('loading').classList.add('hidden');
         document.getElementById('inputs').classList.remove('hidden');
-        document.getElementById('input').value = globalVars.queriedUrl;
+        document.getElementById('input').value = appState.queriedUrl;
     });
 
     // media? later maybe.
@@ -94,8 +94,9 @@ async function onGenerateVideoClick(btn, data) {
   //const mainImg = data.json.pageResources.mainImgResourceId;
   //const thumbImg = data.json.generatedImages.imageIds[0];
   const mainImg = apiUrl + data.json.pageResources.mainImgServingUrl;
-  const thumbImg = apiUrl + globalVars.vid.entering.servingUrl; //data.json.generatedImages.servingUrls[0];
+  const thumbImg = apiUrl + appState.vid.entering.servingUrl; //data.json.generatedImages.servingUrls[0];
 
+    // trzebaby tu callnac upload api, upnac obrazki i zwrócić urle
   await generateVideo({
     mainImg,
     featuresImgs: [],
@@ -131,8 +132,12 @@ function proceedWithMediaStuff(data) {
      //gen-vid-btn
     const btn = document.getElementById('gen-vid-btn');
 
-    initUpload('upload-form1');
-    initUpload('upload-form2');
+    initUpload('upload-form1', (file) => {
+        appState.vid.feature1File = file;
+    });
+    initUpload('upload-form2', (file) => {
+        appState.vid.feature2File = file;
+    });
     btn.addEventListener('click', async function () {
       await onGenerateVideoClick(btn, data);
     });
@@ -160,12 +165,12 @@ export async function generateVideo({url, mainImg, featuresImgs, thumbImg}) {
     }).finally(() => {
         document.getElementById('loading').classList.add('hidden');
         document.getElementById('inputs').classList.remove('hidden');
-        document.getElementById('input').value = globalVars.queriedUrl;
+        document.getElementById('input').value = appState.queriedUrl;
     });
 
 }
 export async function doMediaStuff(url) {
-    globalVars.queriedUrl = url;
+    appState.queriedUrl = url;
     document.getElementById('data-container').innerHTML = '';
     document.getElementById('loading').classList.remove('hidden');
 
@@ -181,12 +186,12 @@ export async function doMediaStuff(url) {
     }).finally(() => {
         document.getElementById('loading').classList.add('hidden');
         document.getElementById('inputs').classList.remove('hidden');
-        document.getElementById('input').value = globalVars.queriedUrl;
+        document.getElementById('input').value = appState.queriedUrl;
     });
 }
 
 export async function doRedditStuff(url) {
-    globalVars.queriedUrl = url;
+    appState.queriedUrl = url;
     document.getElementById('data-container').innerHTML = '';
     document.getElementById('loading').classList.remove('hidden');
 
@@ -202,7 +207,7 @@ export async function doRedditStuff(url) {
     }).finally(() => {
         document.getElementById('loading').classList.add('hidden');
         document.getElementById('inputs').classList.remove('hidden');
-        document.getElementById('input').value = globalVars.queriedUrl;
+        document.getElementById('input').value = appState.queriedUrl;
     });
 }
 
@@ -262,52 +267,3 @@ document.addEventListener("DOMContentLoaded", async function () {
   await initApp();
 });
 
-window.goToLink = async function (event, url) {
-    console.log('goToLink', {event, url});
-
-    if(!url){
-        return;
-    }
-   if(url === 'Unlock'){
-       event.preventDefault();
-       document.getElementById('loading').classList.remove('hidden');
-       await window.createBuySession(window.globalVars.queriedUrl, window.globalVars.redditEntityId);
-   }
-};
-// expose to moustache
-window.createBuySession = createBuySession;
-window.globalVars = globalVars;
-
-window.copyToClipboard = function copyToClipboard(element) {
-    const text = element.innerText;//
-    navigator.clipboard.writeText(text).then(() => {
-        alert("Copied to clipboard!");
-    }).catch(err => {
-        console.error("Error copying text: ", err);
-    });
-}
-
-window.selectEntering =  function selectEntering(e,index, url) {
-    console.log(arguments);
-    e.preventDefault();
-    globalVars.vid = globalVars.vid || {};
-    globalVars.vid.entering = {
-        servingUrl: url,
-        index
-    };
-    // uncheck class selected to all .image-item
-    const items = document.querySelectorAll('.thumbs .image-item');
-    items.forEach(item => {
-        item.classList.remove('selected');
-    });
-    // check class selected to this item
-    const selectedItem = document.querySelector(`#image-item-${index}`);
-    selectedItem.classList.add('selected');
-};
-window.showAnswer =  function showAnswer(index, btn) {
-    const answerElement = document.getElementById(`answer-${index}`);
-    if (answerElement) {
-        answerElement.classList.remove('hidden');
-    }
-    btn.style.display = "none"; // Ukrywa przycisk
-}

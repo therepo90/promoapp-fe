@@ -13,7 +13,7 @@ const htmlFormObj = {
 
 let MAX_FILE_SIZE = 350 * 1024 * 10 * 2; // 7mb
 
-export function initUpload(formId) {//
+export function initUpload(formId, onFileUpload) {
     console.log('initUpload', formId);
     const form = document.getElementById(formId);
   const dropzone = form.querySelector('.dropzone');
@@ -102,6 +102,7 @@ export function initUpload(formId) {//
     };
     reader.readAsDataURL(file);
     htmlFormObj[formId].selectedFile = file;
+    onFileUpload(file);
     uploadText.classList.add('hidden');
     console.log({ htmlFormObj });
   }
