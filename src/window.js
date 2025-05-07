@@ -15,7 +15,7 @@ window.goToLink = async function (event, url) {
 };
 // expose to moustache
 window.createBuySession = createBuySession;
-window.globalVars = appState;
+window.appState = appState;
 
 window.copyToClipboard = function copyToClipboard(element) {
     const text = element.innerText;//

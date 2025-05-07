@@ -1,13 +1,14 @@
 //const host = 'http://localhost:3000';
 
-import {apiUrl, defaultInput} from "./cfg";
+import {apiUrl, defaultInput, uploadApiUrl} from "./cfg";
 import {createBuySession} from "./stripe";
 import {appState} from "./appState";
 import {callReddit, getReddit} from "./reddit";
 import {callMedia} from "./media";
 import {callVideo} from "./video";
 import {initUpload, initUploadForm} from "./upload";
-
+import {uploadApi} from "./upload-api";
+import './window.js';
 
 export const  updateUI = async () => {
 
@@ -94,12 +95,20 @@ async function onGenerateVideoClick(btn, data) {
   //const mainImg = data.json.pageResources.mainImgResourceId;
   //const thumbImg = data.json.generatedImages.imageIds[0];
   const mainImg = apiUrl + data.json.pageResources.mainImgServingUrl;
-  const thumbImg = apiUrl + appState.vid.entering.servingUrl; //data.json.generatedImages.servingUrls[0];
-
+  const thumbImg = appState.vid.entering.servingUrl; //data.json.generatedImages.servingUrls[0];
+    const featuresImgsRaw = [appState.vid.feature1File, appState.vid.feature2File].filter(e =>e);
     // trzebaby tu callnac upload api, upnac obrazki i zwrócić urle
+    const featuresImgs = []
+    for (const fimg of featuresImgsRaw) {
+        const formData = new FormData();
+        formData.append('file', fimg);
+        const {filename} = await uploadApi.uploadFile(formData);
+        const servingUrl = `${uploadApiUrl}/file/${filename}`;
+        featuresImgs.push(servingUrl);
+    }
   await generateVideo({
     mainImg,
-    featuresImgs: [],
+    featuresImgs,
     thumbImg,
     url,
   }).finally(() => {
@@ -129,6 +138,7 @@ function proceedWithMediaStuff(data) {
     document.getElementById('loading-succ').classList.remove('hidden');
 
     document.getElementById('image-item-0').classList.add('selected');
+    appState.vid.entering.servingUrl = apiUrl + data.json.pageResources.mainImgServingUrl;
      //gen-vid-btn
     const btn = document.getElementById('gen-vid-btn');
 

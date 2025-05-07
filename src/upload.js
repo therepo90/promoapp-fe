@@ -29,9 +29,9 @@ export function initUpload(formId, onFileUpload) {
   dropzone.addEventListener('dragleave', () => {
     dropzone.classList.remove('drag-over');
   });
-  dropzone.addEventListener('click', () => {
+  /*dropzone.addEventListener('click', () => {
     fileInput.click(); // Wywołuje kliknięcie na ukrytym input file
-  });
+  });*/
 
   dropzone.addEventListener('drop', (e) => {
     e.preventDefault();

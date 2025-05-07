@@ -1,4 +1,5 @@
 export const apiUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:3000' : 'https://apipromo.idontknowhatimdoing.com';
+export const uploadApiUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:3009' : 'https://upload-api.idontknowhatimdoing.com';
 export const dell = process.env.LOCAL_DEV === 'true' ? false : true;
 //export const baseUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:3000' : 'https://api.translatesubtitles.org';
 /*const redirectUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:1234' : 'https://translatesubtitles.org';*/
@@ -12,5 +13,5 @@ export const auth0Cfg = {
     }
 }*/
 export const shouldDelay = dell;
-export const defaultInput = process.env.LOCAL_DEV === 'true' ? 'https://teidepermit.eu/' : 'https://promo.idontknowhatimdoing.com/';
+export const defaultInput = process.env.LOCAL_DEV === 'true' ? 'https://financialpanda.pl/' : 'https://promo.idontknowhatimdoing.com/';
 //export const defaultInput = 'https://promo.idontknowhatimdoing.com/'; // process.env.LOCAL_DEV === 'true' ? 'https://translatesubtitles.org' : '';

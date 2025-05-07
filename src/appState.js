@@ -6,7 +6,6 @@ export const appState = {
     vid: {
         entering: {
             servingUrl: undefined,
-            index: undefined
         },
         feature1File: undefined,
         feature2File: undefined

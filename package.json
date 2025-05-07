@@ -17,7 +17,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "window.js": "^1.0.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.23.9",
     "@parcel/transformer-less": "^2.12.0",
