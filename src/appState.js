@@ -7,6 +7,8 @@ export const appState = {
         entering: {
             servingUrl: undefined,
         },
+        logoUrl: undefined,
+        mainImg: undefined,
         feature1File: undefined,
         feature2File: undefined
     }

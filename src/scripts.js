@@ -97,6 +97,7 @@ async function onGenerateVideoClick(btn, data) {
   const mainImg = apiUrl + data.json.pageResources.mainImgServingUrl;
   const thumbImg = appState.vid.entering.servingUrl; //data.json.generatedImages.servingUrls[0];
     const featuresImgsRaw = [appState.vid.feature1File, appState.vid.feature2File].filter(e =>e);
+    const logoUrl = apiUrl + data.json.pageResources.logoImgServingUrl;
     // trzebaby tu callnac upload api, upnac obrazki i zwrócić urle
     const featuresImgs = []
     for (const fimg of featuresImgsRaw) {
@@ -107,6 +108,7 @@ async function onGenerateVideoClick(btn, data) {
         featuresImgs.push(servingUrl);
     }
   await generateVideo({
+    logoUrl,
     mainImg,
     featuresImgs,
     thumbImg,
@@ -130,7 +132,8 @@ function proceedWithMediaStuff(data) {
         ...data.json,
         pageResources: {
             ...data.json.pageResources,
-            mainImgServingUrl: apiUrl + data.json.pageResources.mainImgServingUrl
+            mainImgServingUrl: apiUrl + data.json.pageResources.mainImgServingUrl,
+            logoImgServingUrl: apiUrl + data.json.pageResources.logoImgServingUrl,
         },
         generatedImages: parsedImages
     });
@@ -148,11 +151,13 @@ function proceedWithMediaStuff(data) {
     initUpload('upload-form2', (file) => {
         appState.vid.feature2File = file;
     });
+    appState.vid.logoUrl = apiUrl + data.json.pageResources.logoImgServingUrl;
+    appState.vid.mainImg = apiUrl + data.json.pageResources.mainImgServingUrl;
     btn.addEventListener('click', async function () {
       await onGenerateVideoClick(btn, data);
     });
 }
-export async function generateVideo({url, mainImg, featuresImgs, thumbImg}) {
+export async function generateVideo({url, mainImg, featuresImgs, thumbImg, logoUrl}) {
     console.log('generateVideo', {mainImg, featuresImgs, thumbImg});
 
     document.getElementById('data-container').innerHTML = '';
@@ -168,7 +173,8 @@ export async function generateVideo({url, mainImg, featuresImgs, thumbImg}) {
         url,
         mainImg,
         featuresImgs,
-        thumbImg
+        thumbImg,
+        logoUrl
     }).then(data => {
         console.log('callVideo done', {res: data});
         proceedWithVideoStuff(data);

@@ -17,7 +17,7 @@ export async function getVideo(id, token) {
   return data;
 }
 
-export async function callVideo({ url, mainImg, featuresImgs, thumbImg }) {
+export async function callVideo({ url, mainImg, featuresImgs, thumbImg, logoUrl }) {
   console.log('callVideo...');
 
   const data = await apiCall({
@@ -25,6 +25,7 @@ export async function callVideo({ url, mainImg, featuresImgs, thumbImg }) {
     mainImg,
     featuresImgs,
     thumbImg,
+    logoUrl
   }, '/api/video');
   console.log('apiCall done', { data });
   if (shouldDelay) {
