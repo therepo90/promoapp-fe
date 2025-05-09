@@ -466,6 +466,7 @@ function initRedditBtn() {
   btnReddit.addEventListener('click', async function () {
     const url = (document.getElementById('input').value || '').trim();
     if (!url) {
+      alert('Type in url bro.');
       return;
     }
     btnReddit.disabled = true;
@@ -1294,8 +1295,8 @@ async function initApp() {
   const btnVid = document.getElementById('go-btn-vid');
   const btnThumb = document.getElementById('go-btn-thumb');
   if ("false" !== 'true') {
-    btnVid.classList.add('hidden');
-    btnThumb.classList.add('hidden');
+    btnVid.classList.remove('hidden');
+    btnThumb.classList.remove('hidden');
   }
 }
 document.addEventListener('DOMContentLoaded', async function () {

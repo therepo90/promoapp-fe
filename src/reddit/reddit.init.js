@@ -5,6 +5,7 @@ export function initRedditBtn() {
     btnReddit.addEventListener('click', async function () {
         const url = (document.getElementById('input').value || '').trim();
         if (!url) {
+            alert('Type in url bro.');
             return;
         }
         btnReddit.disabled = true;
