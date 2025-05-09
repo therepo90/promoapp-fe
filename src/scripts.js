@@ -1,66 +1,42 @@
 //const host = 'http://localhost:3000';
 
 import { defaultInput } from './cfg';
-import { appState } from './appState';
-import { getReddit } from './reddit/reddit.api';
 import './window.js';
 import { initRedditBtn } from './reddit/reddit.init';
 import { initMediaBtn } from './media/media.init';
 import { initVidBtn } from './video/vide.init';
-import { funnyNames } from './consts';
-import { proceedWithRedditStuff } from './reddit/reddit.service';
-import {template as mediaTemplate} from './templates/components/media';
-import {templates, Templates} from "./templates";
+import { getPreparedResults } from './reddit/reddit.service';
+import { template as mediaTemplate } from './templates/components/media';
+import { template as videoTpl } from './templates/components/video';
+import { template as videoPrepTemplate } from './templates/components/video-prep';
+import { template as redditTemplate } from './templates/components/reddit';
 
-export const updateUI = async () => {};
+import { templates } from './templates';
 
-async function getPreparedResults(url, token, entityId) {
-  appState.queriedUrl = url;
-  document.getElementById('data-container').innerHTML = '';
-  document.getElementById('loading').classList.remove('hidden');
-
-  const name = funnyNames[Math.floor(Math.random() * funnyNames.length)];
-  document.getElementById('loading-text').innerText =
-    `Hey my name is ${name} and I'll work for you today...gimme a sec`;
-
-  document.getElementById('loading-succ').classList.add('hidden');
-  // delay 1000 s
-  //await new Promise(resolve => setTimeout(resolve, 1000000));
-  await getReddit(entityId, token)
-    .then((redditData) => {
-      console.log('callReddit done', { res: redditData });
-      proceedWithRedditStuff(redditData);
-      document.getElementById('loading-succ').classList.remove('hidden');
-    })
-    .finally(() => {
-      document.getElementById('loading').classList.add('hidden');
-      document.getElementById('inputs').classList.remove('hidden');
-      document.getElementById('input').value = appState.queriedUrl;
-    });
-
-  // media? later maybe.
+function registerTemplates() {
+  templates.register('media', mediaTemplate);
+  templates.register('video', videoTpl);
+  templates.register('video-prep', videoPrepTemplate);
+  templates.register('reddit', redditTemplate);
 }
 
-
-async function initApp() { //
+async function initApp() {
+  //
   console.log('DOMContentLoaded init...');
 
   // check for url query param token and save to session storage and remove from url
   const urlParams = new URLSearchParams(window.location.search);
   // paymentSuccess
-  const token = urlParams.get('token');
 
   document.getElementById('input').value = defaultInput;
 
   initRedditBtn();
-  initMediaBtn();//
+  initMediaBtn(); //
   initVidBtn();
 
-  templates.register('media', mediaTemplate);
-  templates.register('video', mediaTemplate);
-  templates.register('video-prep', mediaTemplate);
-  templates.register('reddit', mediaTemplate);
+  registerTemplates();
 
+  const token = urlParams.get('token');
   if (token) {
     const url = decodeURIComponent(urlParams.get('url'));
     const entityId = urlParams.get('entityId');
