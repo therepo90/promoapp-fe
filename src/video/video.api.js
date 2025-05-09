@@ -13,8 +13,8 @@ export async function getVideo(id, token) {
     },
   });
   await checkResError(res);
-  const data = await res.json();
-  return data;
+  const data = await res.json();//
+  return data;//
 }
 
 export async function callVideo({ url, mainImg, featuresImgs, thumbImg, logoUrl }) {

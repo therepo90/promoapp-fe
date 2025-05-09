@@ -2,7 +2,7 @@
 
 import { defaultInput } from './cfg';
 import { appState } from './appState';
-import { getReddit } from './reddit/reddit.api.js/reddit';
+import { getReddit } from './reddit/reddit.api';
 import './window.js';
 import { initRedditBtn } from './reddit/reddit.init';
 import { initMediaBtn } from './media/media.init';

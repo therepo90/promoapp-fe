@@ -1,8 +1,8 @@
 //polling fn to get promo based on status, use getReddit
-import {appState} from "../../appState";
-import {apiUrl, shouldDelay} from "../../cfg";
-import {checkResError} from "../../utils";
-import {apiCall, poll} from "../../common/api";
+import {appState} from "../appState";
+import {apiUrl, shouldDelay} from "../cfg";
+import {checkResError} from "../utils";
+import {apiCall, poll} from "../common/api";
 
 export async function getReddit(id, token) {
     const baseUrl = apiUrl;

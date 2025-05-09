@@ -1,6 +1,6 @@
 import { appState } from '../appState';
 import { funnyNames } from '../consts';
-import { callReddit } from './reddit.api.js/reddit';
+import { callReddit } from './reddit.api';
 
 export function proceedWithRedditStuff(data) {
   const dataContainer = document.getElementById('data-container');

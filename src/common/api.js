@@ -1,4 +1,3 @@
-// /api/reddit
 import {apiUrl} from "../cfg";
 import {checkResError} from "../utils";
 
