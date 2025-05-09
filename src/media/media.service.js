@@ -26,23 +26,6 @@ export function proceedWithMediaStuff(data) {
   });
   dataContainer.innerHTML = html;
   document.getElementById('loading-succ').classList.remove('hidden');
-
-  document.getElementById('image-item-0').classList.add('selected');
-  appState.vid.entering.servingUrl = apiUrl + data.json.pageResources.mainImgServingUrl;
-  //gen-vid-btn
-  const btn = document.getElementById('gen-vid-btn');
-
-  initUpload('upload-form1', (file) => {
-    appState.vid.feature1File = file;
-  });
-  initUpload('upload-form2', (file) => {
-    appState.vid.feature2File = file;
-  });
-  appState.vid.logoUrl = apiUrl + data.json.pageResources.logoImgServingUrl;
-  appState.vid.mainImg = apiUrl + data.json.pageResources.mainImgServingUrl;
-  btn.addEventListener('click', async function () {
-    await onGenerateVideoClick(btn, data);
-  });
 }
 
 export async function doMediaStuff(url) {

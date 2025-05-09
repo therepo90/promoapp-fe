@@ -78,6 +78,18 @@
     </div>
 </script>
 <script id="media-template" type="text/x-handlebars-template">
+    <div class="image-gallery thumbs">
+        {{#each generatedImages.servingUrls}}
+            <div class="image-item" id="image-item-{{@index}}">
+                <a href="#" onclick="selectEntering(event, '{{@index}}', '{{this}}')">
+                    <img src="{{this}}" alt="thumb" class="thumbnail">
+                </a>
+                <a href="{{this}}" download class="download-link" target="_blank">Download</a>  <!-- Link do pobrania -->
+            </div>
+        {{/each}}
+    </div>
+</script>
+<script id="video-prep-template" type="text/x-handlebars-template">
     <h3>Main page</h3>
     <div class="image-item selected">
         <a>  <!-- Link do dużego obrazu w nowej karcie -->
@@ -134,7 +146,6 @@
     <button class="btn btn-primary" id="gen-vid-btn">Generate video</button>
     <div id="video-output"></div>
 </script>
-
 <div id="image-output"></div>
 <script id="reddit-template" type="text/x-handlebars-template">
     <p><strong>URL:</strong> <a href="{{url}}" target="_blank">{{url}}</a></p>

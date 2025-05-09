@@ -8,7 +8,7 @@ import {initUpload} from "../upload/upload";
 
 export function proceedWithVideoPreparationStuff(data) {
   const dataContainer = document.getElementById('data-container');
-  const templateSource = document.getElementById('media-template').innerHTML;
+  const templateSource = document.getElementById('video-prep-template').innerHTML;
   const template = window.Handlebars.compile(templateSource);
   // map apiUrl
   const parsedImages = {
