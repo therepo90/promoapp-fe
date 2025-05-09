@@ -4,11 +4,11 @@ import { initUpload } from '../upload/upload';
 import { onGenerateVideoClick } from '../video/video.service';
 import { funnyNames } from '../consts';
 import { callMedia } from './media.api';
+import {templates} from "../templates";
 
 export function proceedWithMediaStuff(data) {
   const dataContainer = document.getElementById('data-container');
-  const templateSource = document.getElementById('media-template').innerHTML;
-  const template = window.Handlebars.compile(templateSource);
+  const template = templates.get('media');
   // map apiUrl
   const parsedImages = {
     ...data.json.generatedImages,

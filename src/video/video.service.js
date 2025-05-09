@@ -5,11 +5,11 @@ import { funnyNames } from '../consts';
 import { callVideo } from './video.api';
 import {callMedia} from "../media/media.api";
 import {initUpload} from "../upload/upload";
+import {templates} from "../templates";
 
 export function proceedWithVideoPreparationStuff(data) {
   const dataContainer = document.getElementById('data-container');
-  const templateSource = document.getElementById('video-prep-template').innerHTML;
-  const template = window.Handlebars.compile(templateSource);
+  const template = templates.get('video-prep');
   // map apiUrl
   const parsedImages = {
     ...data.json.generatedImages,
@@ -73,8 +73,7 @@ export async function doVideoStuff(url) {
 
 export function proceedWithVideoStuff(data) {
   const dataContainer = document.getElementById('data-container');
-  const templateSource = document.getElementById('video-template').innerHTML;
-  const template = window.Handlebars.compile(templateSource);
+  const template = templates.get('video');
   // map apiUrl
   const parsed = {
     ...data.json,

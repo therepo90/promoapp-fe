@@ -18,6 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "templates": "^1.2.9",
     "window.js": "^1.0.0"
   },
   "devDependencies": {

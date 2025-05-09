@@ -1,11 +1,11 @@
 import { appState } from '../appState';
 import { funnyNames } from '../consts';
 import { callReddit } from './reddit.api';
+import {templates} from "../templates";
 
 export function proceedWithRedditStuff(data) {
   const dataContainer = document.getElementById('data-container');
-  const templateSource = document.getElementById('reddit-template').innerHTML;
-  const template = window.Handlebars.compile(templateSource);
+  const template = templates.get('reddit');
   const html = template(data.json);
   dataContainer.innerHTML = html;
   document.getElementById('loading-succ').classList.remove('hidden');

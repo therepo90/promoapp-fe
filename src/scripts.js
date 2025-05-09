@@ -9,6 +9,8 @@ import { initMediaBtn } from './media/media.init';
 import { initVidBtn } from './video/vide.init';
 import { funnyNames } from './consts';
 import { proceedWithRedditStuff } from './reddit/reddit.service';
+import {template as mediaTemplate} from './templates/components/media';
+import {templates, Templates} from "./templates";
 
 export const updateUI = async () => {};
 
@@ -39,6 +41,7 @@ async function getPreparedResults(url, token, entityId) {
   // media? later maybe.
 }
 
+
 async function initApp() { //
   console.log('DOMContentLoaded init...');
 
@@ -48,9 +51,15 @@ async function initApp() { //
   const token = urlParams.get('token');
 
   document.getElementById('input').value = defaultInput;
+
   initRedditBtn();
   initMediaBtn();//
   initVidBtn();
+
+  templates.register('media', mediaTemplate);
+  templates.register('video', mediaTemplate);
+  templates.register('video-prep', mediaTemplate);
+  templates.register('reddit', mediaTemplate);
 
   if (token) {
     const url = decodeURIComponent(urlParams.get('url'));
