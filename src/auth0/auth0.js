@@ -1,5 +1,5 @@
-import {apiUrl, auth0Cfg} from "./cfg";
-import {checkResError} from "./utils";
+import {apiUrl, auth0Cfg} from "../cfg";
+import {checkResError} from "../utils";
 
 let auth0Client = null;
 

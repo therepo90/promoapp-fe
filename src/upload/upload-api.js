@@ -1,4 +1,4 @@
-import {uploadApiUrl} from "./cfg";
+import {uploadApiUrl} from "../cfg";
 
 class UploadApi {
     async uploadFile(formData) {

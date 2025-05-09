@@ -1,9 +1,9 @@
 import { apiUrl } from '../cfg';
 import { appState } from '../appState';
-import { initUpload } from '../upload';
+import { initUpload } from '../upload/upload';
 import { onGenerateVideoClick } from '../video/video.service';
 import { funnyNames } from '../consts';
-import { callMedia } from '../media';
+import { callMedia } from './media.api';
 
 export function proceedWithMediaStuff(data) {
   const dataContainer = document.getElementById('data-container');

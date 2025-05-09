@@ -1,4 +1,4 @@
-import {createBuySession} from "./stripe";
+import {createBuySession} from "./stripe/stripe";
 import {appState} from "./appState";
 
 window.goToLink = async function (event, url) {

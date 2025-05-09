@@ -1,7 +1,7 @@
-import {appState} from "./appState";
-import {apiUrl, shouldDelay} from "./cfg";
-import {checkResError} from "./utils";
-import {apiCall, poll} from "./api";
+import {appState} from "../appState";
+import {apiUrl, shouldDelay} from "../cfg";
+import {checkResError} from "../utils";
+import {apiCall, poll} from "../common/api";
 
 export async function getMedia(id, token) {
     const baseUrl = apiUrl;

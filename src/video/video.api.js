@@ -1,6 +1,6 @@
-import { apiUrl, shouldDelay } from './cfg';
-import { checkResError } from './utils';
-import { apiCall, poll } from './api';
+import { apiUrl, shouldDelay } from '../cfg';
+import { checkResError } from '../utils';
+import { apiCall, poll } from '../common/api';
 
 export async function getVideo(id, token) {
   const baseUrl = apiUrl;

@@ -1,6 +1,6 @@
 // /api/reddit
-import {apiUrl} from "./cfg";
-import {checkResError} from "./utils";
+import {apiUrl} from "../cfg";
+import {checkResError} from "../utils";
 
 export async function apiCall(body, path) {
     const baseUrl = apiUrl;

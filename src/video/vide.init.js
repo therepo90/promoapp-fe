@@ -1,4 +1,4 @@
-import {doMediaStuff} from "../media/media.service";
+import {doVideoStuff} from "./video.service";
 
 export function initVidBtn() {
     const btnVid = document.getElementById('go-btn-vid');
@@ -8,7 +8,7 @@ export function initVidBtn() {
             return;
         }
         btnVid.disabled = true;
-        await doMediaStuff(url, btnVid).finally(() => {
+        await doVideoStuff(url, btnVid).finally(() => {
             btnVid.disabled = false;
         });
     });
