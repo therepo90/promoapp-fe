@@ -1294,7 +1294,7 @@ async function initApp() {
   }
   const btnVid = document.getElementById('go-btn-vid');
   const btnThumb = document.getElementById('go-btn-thumb');
-  if ("false" !== 'true') {
+  if ("false" === 'true') {
     btnVid.classList.remove('hidden');
     btnThumb.classList.remove('hidden');
   }

@@ -53,7 +53,7 @@ async function initApp() {
 
   const btnVid = document.getElementById('go-btn-vid');
   const btnThumb = document.getElementById('go-btn-thumb');
-  if (process.env.LOCAL_DEV !== 'true') {
+  if (process.env.LOCAL_DEV === 'true') {
     btnVid.classList.remove('hidden');
     btnThumb.classList.remove('hidden');
   }
