@@ -1,0 +1,388 @@
+.section-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+.keyword-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+.keyword-list li {
+  margin-right: 0.5em;
+  margin-bottom: 0.25em;
+  padding: 0.25em 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+.func-list {
+  list-style: disc;
+  margin-left: 20px;
+}
+.sub-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 20px;
+}
+.sub-list li {
+  margin-bottom: 0.5em;
+}
+.subreddit-section {
+  margin-bottom: 1.5em;
+  /* Add space between subreddits */
+  border: 1px solid #eee;
+  /* Add a subtle border */
+  padding: 1em;
+  border-radius: 5px;
+  background-color: #fdfdfd;
+  /* Light background for contrast */
+}
+.post-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.post-list li {
+  margin-bottom: 0.5em;
+  padding: 0.5em 0.5em 0.5em 2em;
+  border-bottom: 1px solid #f0f0f0;
+  /* Separator between posts */
+}
+.post-list li:last-child {
+  border-bottom: none;
+  /*Remove bottom border from last element*/
+}
+.post-link {
+  text-decoration: none;
+  font-weight: bold;
+  /* Make post titles stand out */
+}
+.post-votes {
+  font-style: italic;
+  color: black;
+  margin-left: 0.5em;
+}
+.post-list li p {
+  margin-top: 0.25em;
+  font-size: 0.9em;
+  color: black;
+}
+.post-list li p:first-of-type {
+  margin-top: 0.5em;
+  /* Add top margin to 'text' paragraph only */
+}
+.subr {
+  font-size: 1.6em;
+  /* Slightly smaller than section title */
+  margin-bottom: 0.5em;
+}
+.upload-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.upload-text {
+  vertical-align: middle;
+}
+.upload-form .submit {
+  pointer-events: none;
+  touch-action: none;
+}
+.dropzone {
+  border: 2px dashed #ccc;
+  padding: 40px;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.hidden {
+  display: none;
+}
+.dropzone.drag-over {
+  background-color: #f0f0f0;
+}
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0;
+  background: white;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #000000;
+  margin: 0;
+}
+.footer {
+  width: 100%;
+  background-color: #ececec;
+  padding: 10px;
+  text-align: center;
+}
+.footer a {
+  color: black;
+}
+.main {
+  background-color: white;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: max-content 1fr max-content;
+}
+.container {
+  background-color: white;
+  /* White background color */
+  border-radius: 8px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-size: 16px;
+  line-height: 20px;
+  /*center to screen*/
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  align-items: center;
+  padding-bottom: 100px;
+}
+@media (max-width: 992px) {
+  .container {
+    max-width: 100%;
+    margin-top: 50px;
+  }
+}
+.input {
+  width: 400px;
+}
+@media (max-width: 992px) {
+  .input {
+    width: 100%;
+  }
+}
+.inputs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 20px;
+  max-width: 700px;
+}
+@media (max-width: 992px) {
+  .inputs {
+    width: 100%;
+    max-width: 100%;
+    flex-direction: column;
+  }
+}
+.h1 {
+  text-align: center;
+  font-size: 36px;
+  padding-top: 40px;
+}
+.h3 {
+  font-size: 24px;
+  color: gray;
+}
+.ul {
+  margin: 0 auto;
+  width: 600px;
+  padding-top: 120px;
+  color: #252525;
+  font-size: 16px;
+}
+@media (max-width: 992px) {
+  .ul {
+    width: 100%;
+  }
+}
+#go-btn.disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+.data-c {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.hidden {
+  display: none !important;
+}
+rg-wgl-loader {
+  display: block;
+  width: 250px;
+  height: 250px;
+}
+.pro-loader {
+  height: 250px;
+  width: 250px;
+  margin: 0 auto;
+}
+.dot1 {
+  font-size: 24px;
+  animation: visibility 3s linear infinite;
+}
+@keyframes visibility {
+  0% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.dot2 {
+  font-size: 36px;
+  animation: visibility2 3s linear infinite;
+}
+@keyframes visibility2 {
+  0% {
+    opacity: 0;
+  }
+  21% {
+    opacity: 0;
+  }
+  22% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.dot3 {
+  font-size: 48px;
+  animation: visibility3 3s linear infinite;
+}
+@keyframes visibility3 {
+  0% {
+    opacity: 0;
+  }
+  43% {
+    opacity: 0;
+  }
+  44% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.meta {
+  display: flex;
+  gap: 40px;
+}
+.small-text {
+  font-size: 12px;
+  color: gray;
+}
+.copyable-hashtag {
+  font-size: 12px;
+  cursor: pointer;
+  /* Indicate it's clickable */
+  background-color: #f0f0f0;
+  /* Light gray background */
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 5px;
+  display: inline-block;
+  /* Allows margin to be applied on all sides */
+}
+.copyable-hashtag:hover {
+  background-color: #e0e0e0;
+  /* Slightly darker on hover */
+}
+section {
+  width: 100%;
+}
+.hashtags h3 {
+  font-size: 12px;
+  display: inline-block;
+}
+.btnz {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
+}
+.btnz > * {
+  margin: 0 10px;
+}
+/* Style dla galerii obrazów */
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 10px;
+}
+/* Style dla pojedynczego elementu obrazu */
+.image-item {
+  margin: 5px;
+  border: 1px solid #ddd;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  text-align: center;
+  /* Wyśrodkowanie tekstu i linku */
+}
+.image-item.selected {
+  border: 2px solid #4CAF50;
+  box-shadow: 0 0 10px 10px rgba(76, 175, 80, 0.5);
+  /* Zielony cień dla wybranego elementu */
+}
+.image-item:hover {
+  transform: scale(1.05);
+}
+/* Style dla miniatur */
+.thumbnail {
+  width: 256px;
+  height: 256px;
+  object-fit: cover;
+  display: block;
+  /* Usuń dodatkowe odstępy pod obrazem */
+  margin-bottom: 5px;
+  /* Odstęp między obrazem a linkiem */
+}
+/* Style dla linku do pobrania */
+.download-link {
+  display: block;
+  padding: 5px 10px;
+  background-color: #4CAF50;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+.download-link:hover {
+  background-color: #3e8e41;
+}
+.loading-success {
+  margin-top: 12px;
+}
+.upload-form {
+  width: 300px;
+  height: 300px;
+  display: block;
+}
