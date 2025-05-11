@@ -1,17 +1,31 @@
-export const apiUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:3000' : 'https://apipromo.idontknowhatimdoing.com';
-export const uploadApiUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:3009' : 'https://upload-api.idontknowhatimdoing.com';
-export const dell = process.env.LOCAL_DEV === 'true' ? false : true;
-//export const baseUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:3000' : 'https://api.translatesubtitles.org';
-/*const redirectUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:1234' : 'https://translatesubtitles.org';*/
-/*
-export const auth0Cfg = {
-    "domain": "translatesubtitles.eu.auth0.com",
-    "clientId": "Yl7KeMwXe4zeLMPz9zIHc33Nircfgxh1",
-    authorizationParams: {
-        redirect_uri: redirectUrl,
-        audience: 'https://translatesubtitles',
-    }
-}*/
-export const shouldDelay = dell;
-export const defaultInput = process.env.LOCAL_DEV === 'true' ? 'https://financialpanda.pl/' : '';
-//export const defaultInput = 'https://promo.idontknowhatimdoing.com/'; // process.env.LOCAL_DEV === 'true' ? 'https://translatesubtitles.org' : '';
+const configMap = {
+  dev: {
+    apiUrl: 'http://localhost:3000',
+    uploadApiUrl: 'http://localhost:3009',
+    shouldDelay: false,
+    defaultInput: 'https://financialpanda.pl/',
+  },
+  prod: {
+    apiUrl: 'https://apipromo.idontknowhatimdoing.com',
+    uploadApiUrl: 'https://upload-api.idontknowhatimdoing.com',
+    shouldDelay: true,
+    defaultInput: '',
+  },
+  onlyfe: {
+    apiUrl: 'http://localhost:3000',
+    uploadApiUrl: 'https://upload-api.idontknowhatimdoing.com',
+    shouldDelay: true,
+    defaultInput: 'https://financialpanda.pl',
+  }
+};
+
+// Wybór konfiguracji na podstawie zmiennej środowiskowej
+const currentEnv = process.env.NODE_ENV || 'prod'; // domyślnie prod
+const config = configMap[currentEnv];
+if(!config) {
+  throw new Error(`unk env: ${currentEnv}`);
+}
+export const apiUrl = config.apiUrl;
+export const uploadApiUrl = config.uploadApiUrl;
+export const shouldDelay = config.shouldDelay;
+export const defaultInput = config.defaultInput;

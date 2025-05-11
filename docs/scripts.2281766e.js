@@ -123,24 +123,38 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.uploadApiUrl = exports.shouldDelay = exports.dell = exports.defaultInput = exports.apiUrl = void 0;
-const apiUrl = exports.apiUrl = "false" === 'true' ? 'http://localhost:3000' : 'https://apipromo.idontknowhatimdoing.com';
-const uploadApiUrl = exports.uploadApiUrl = "false" === 'true' ? 'http://localhost:3009' : 'https://upload-api.idontknowhatimdoing.com';
-const dell = exports.dell = "false" === 'true' ? false : true;
-//export const baseUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:3000' : 'https://api.translatesubtitles.org';
-/*const redirectUrl = process.env.LOCAL_DEV === 'true' ? 'http://localhost:1234' : 'https://translatesubtitles.org';*/
-/*
-export const auth0Cfg = {
-    "domain": "translatesubtitles.eu.auth0.com",
-    "clientId": "Yl7KeMwXe4zeLMPz9zIHc33Nircfgxh1",
-    authorizationParams: {
-        redirect_uri: redirectUrl,
-        audience: 'https://translatesubtitles',
-    }
-}*/
-const shouldDelay = exports.shouldDelay = dell;
-const defaultInput = exports.defaultInput = "false" === 'true' ? 'https://financialpanda.pl/' : '';
-//export const defaultInput = 'https://promo.idontknowhatimdoing.com/'; // process.env.LOCAL_DEV === 'true' ? 'https://translatesubtitles.org' : '';
+exports.uploadApiUrl = exports.shouldDelay = exports.defaultInput = exports.apiUrl = void 0;
+const configMap = {
+  dev: {
+    apiUrl: 'http://localhost:3000',
+    uploadApiUrl: 'http://localhost:3009',
+    shouldDelay: false,
+    defaultInput: 'https://financialpanda.pl/'
+  },
+  prod: {
+    apiUrl: 'https://apipromo.idontknowhatimdoing.com',
+    uploadApiUrl: 'https://upload-api.idontknowhatimdoing.com',
+    shouldDelay: true,
+    defaultInput: ''
+  },
+  onlyfe: {
+    apiUrl: 'http://localhost:3000',
+    uploadApiUrl: 'https://upload-api.idontknowhatimdoing.com',
+    shouldDelay: true,
+    defaultInput: 'https://financialpanda.pl'
+  }
+};
+
+// Wybór konfiguracji na podstawie zmiennej środowiskowej
+const currentEnv = "production" || 'prod'; // domyślnie prod
+const config = configMap[currentEnv];
+if (!config) {
+  throw new Error(`unk env: ${currentEnv}`);
+}
+const apiUrl = exports.apiUrl = config.apiUrl;
+const uploadApiUrl = exports.uploadApiUrl = config.uploadApiUrl;
+const shouldDelay = exports.shouldDelay = config.shouldDelay;
+const defaultInput = exports.defaultInput = config.defaultInput;
 },{}],"v86b":[function(require,module,exports) {
 "use strict";
 
