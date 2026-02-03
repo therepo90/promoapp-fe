@@ -11,7 +11,7 @@
     "deploy": "npm run build:prod && npm run acp"
   },
   "engines": {
-    "node": "v20.12.2"
+    "node": "v20"
   },
   "browserslist": "> 1%, last 2 versions, not dead",
   "keywords": [],

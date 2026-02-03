@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="styles.98c8d5ec.css">
     <script src="rg-web-component.c82a82e9.77b88d9d.js" defer=""></script>
     <script src="handlebars-helpers.41f99635.js" defer=""></script>
-    <script src="scripts.2281766e.js" defer=""></script>
+    <script src="scripts.fe6367dd.js" defer=""></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -82,11 +82,44 @@
             <!--<li>-<i>No credit card, no subscriptions, not even a clumsy account needed. Freemium - full access is 4.99$ bucks.</i> </li>-->
         </ul>
     </div>
-    <div class="footer">
-        &copy; 2025 PromoApp | <a style="text-decoration: underline;color:unset;" href="https://therepo90.github.io">RepoGamesStudio</a> |
-        <a style="text-decoration: underline;color:unset;" href="terms.html">Terms and Conditions</a> |
-        Contact: <a href="mailto:RepoGamesStudio@gmail.com">RepoGamesStudio@gmail.com</a>
-    </div>
+  <footer class="footer">
+    &copy; 2026 SellYourSaaS | <a style="text-decoration: underline;color:unset;" href="https://therepo90.github.io/">RepoGamesStudio</a> |
+    <a style="text-decoration: underline;color:unset;" href="/terms">Terms and Conditions</a> |
+    <style>.my-apps-container { display: inline; position: relative; }
+        .my-apps-link { text-decoration: underline; color: unset; cursor: pointer; background: none; border: none; font: inherit; padding: 0; }
+        .my-apps-dropdown { display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: #333; border-radius: 6px; padding: 10px 14px; margin-bottom: 8px; min-width: 500px; z-index: 100; }
+        .my-apps-dropdown.show { display: block; }
+        .my-apps-dropdown-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #aaa; }
+        .my-apps-dropdown-title { color: white; font-weight: bold; font-size: 14px; margin: 0; }
+        .my-apps-close { background: none; border: none; color: white; font-size: 18px; cursor: pointer; padding: 0; line-height: 1; }
+        .my-apps-close:hover { color: #ddd; }
+        .my-apps-dropdown a { display: block; color: white; text-decoration: underline; padding: 4px 0; word-break: break-all; }
+        .my-apps-dropdown a:hover { color: #ddd; }
+        @media (max-width: 768px) {
+            .my-apps-dropdown { min-width: unset; position: fixed; top: 0; left: 0; right: 0; bottom: 0; transform: none; margin: 0; border-radius: 0; padding: 20px; min-width: unset; width: 100%; height: 100%; box-sizing: border-box; overflow-y: auto; }
+            .my-apps-dropdown-header { margin-bottom: 15px; padding-bottom: 10px; }
+            .my-apps-dropdown-title { font-size: 18px; }
+            .my-apps-close { font-size: 28px; }
+            .my-apps-dropdown a { padding: 10px 0; font-size: 16px; }
+        }</style>
+    <span class="my-apps-container">
+            <span class="my-apps-link" onclick="document.getElementById('myAppsDropdown').classList.toggle('show')">My other apps</span>
+            <div class="my-apps-dropdown" id="myAppsDropdown">
+                <div class="my-apps-dropdown-header">
+                    <span class="my-apps-dropdown-title">My Other Apps</span>
+                    <button class="my-apps-close" onclick="document.getElementById('myAppsDropdown').classList.remove('show')">&times;</button>
+                </div>
+                <a href="https://teidepermit.eu" target="_blank">https://teidepermit.eu</a>
+                <a href="https://financialpanda.org" target="_blank">https://financialpanda.org</a>
+                <a href="https://translatesubtitles.org" target="_blank">https://translatesubtitles.org</a>
+                <a href="https://sellyoursaas.idontknowhatimdoing.com" target="_blank">https://sellyoursaas.idontknowhatimdoing.com</a>
+                <a href="https://restapitools.com/" target="_blank">https://restapitools.com</a>
+                <a href="https://deletesocialmedia.idontknowhatimdoing.com/" target="_blank">https://deletesocialmedia.idontknowhatimdoing.com</a>
+                <a href="https://zwierzakszukadomu.pl" target="_blank">https://zwierzakszukadomu.pl</a>
+            </div>
+        </span> |
+    Contact: <a href="mailto:RepoGamesStudio@gmail.com">RepoGamesStudio@gmail.com</a>
+  </footer>
 </div>
 
 
